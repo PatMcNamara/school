@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/pjmcnamara2/!svn/ver/27/common/sparse_array
+END
+Life.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/pjmcnamara2/!svn/ver/26/common/sparse_array/Life.java
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/pjmcnamara2/!svn/ver/12/common/sparse_array/.classpath
+END
+AxisList.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/pjmcnamara2/!svn/ver/26/common/sparse_array/AxisList.java
+END
+MySparseArray.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/pjmcnamara2/!svn/ver/26/common/sparse_array/MySparseArray.java
+END
+RowList.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/pjmcnamara2/!svn/ver/26/common/sparse_array/RowList.java
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/pjmcnamara2/!svn/ver/12/common/sparse_array/.project
+END
+ElementList.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/pjmcnamara2/!svn/ver/26/common/sparse_array/ElementList.java
+END
+ColumnIterator.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/pjmcnamara2/!svn/ver/26/common/sparse_array/ColumnIterator.java
+END
+MatrixElem.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/pjmcnamara2/!svn/ver/25/common/sparse_array/MatrixElem.java
+END
+ColList.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/pjmcnamara2/!svn/ver/25/common/sparse_array/ColList.java
+END
+MatrixNode.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/pjmcnamara2/!svn/ver/25/common/sparse_array/MatrixNode.java
+END
+ElemIterator.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/pjmcnamara2/!svn/ver/25/common/sparse_array/ElemIterator.java
+END
+SparseArray.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/pjmcnamara2/!svn/ver/26/common/sparse_array/SparseArray.java
+END
+AxisIterator.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/pjmcnamara2/!svn/ver/26/common/sparse_array/AxisIterator.java
+END

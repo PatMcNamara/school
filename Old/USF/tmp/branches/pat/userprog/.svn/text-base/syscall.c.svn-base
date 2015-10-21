@@ -1,0 +1,296 @@
+#include "userprog/syscall.h"
+#include <stdio.h>
+#include <stdint.h>
+#include <syscall-nr.h>
+#include "threads/interrupt.h"
+#include "threads/thread.h"
+#include "threads/init.h"
+#include "threads/synch.h"
+#include "threads/vaddr.h"
+#include "threads/malloc.h"
+#include "userprog/process.h"
+#include "userprog/pagedir.h"
+#include "filesys/filesys.h"
+#include "filesys/file.h"
+
+#include "filesys/off_t.h"
+
+static void syscall_handler (struct intr_frame *);
+void *next_arg(void);
+char *next_str(void);
+void validate_byte(void *);
+void validate_range(void *, void *);
+void validate_buffer(void *, unsigned);
+void validate_word(void *);
+void validate_str(char *);
+
+tid_t exec(void);
+//void syscall_exit(int);
+int open(char *);
+int read(void);
+int write(void);
+void seek(void);
+
+void *offset;
+
+void
+syscall_init (void)
+{
+  intr_register_int (0x30, 3, INTR_ON, syscall_handler, "syscall");
+  lock_init(&fs_lock);
+}
+
+static void
+syscall_handler (struct intr_frame *f)
+{
+  uint32_t ret_val;
+
+  offset = f->esp;
+  int sys_call = (int) next_arg();
+
+  char *tmp; //TODO remove
+
+  switch (sys_call) {
+  case SYS_HALT:
+    power_off();
+    NOT_REACHED ();
+
+  case SYS_EXIT:
+//    syscall_exit((int) next_arg());
+    thread_current()->exit_controler->value = (int) next_arg();
+//  ec->value = value;
+//  sema_up(&ec->parent);
+//  sema_up(&thread_current()->exit_controler->running);
+
+    thread_exit();
+    NOT_REACHED ();
+
+  case SYS_EXEC:
+    ret_val = exec();
+    break;
+
+  case SYS_WAIT:
+    ret_val = process_wait((tid_t) next_arg());
+    break;
+
+  case SYS_CREATE:
+    lock_acquire(&fs_lock);
+    tmp = next_str();// can't put this into filesys_create or it passes them in the wrong order
+    ret_val = filesys_create(tmp, (unsigned) next_arg());
+    lock_release(&fs_lock);
+    break;
+
+  case SYS_REMOVE:
+    lock_acquire(&fs_lock);
+    ret_val = filesys_remove(next_str());
+    lock_release(&fs_lock);
+    break;
+
+  case SYS_OPEN:
+    ret_val = open(next_str());
+    break;
+
+  case SYS_FILESIZE:
+    lock_acquire(&fs_lock);
+//    //lock_acquire(&thread_current()->fdt_lock);
+    ret_val = file_length(thread_current()->fd_table[(int) next_arg()]);//TODO check for bad fd's
+//    //lock_release(&thread_current()->fdt_lock);
+    lock_release(&fs_lock);
+    break;
+
+  case SYS_READ:
+    ret_val = read();
+    break;
+
+  case SYS_WRITE:
+    ret_val = write();
+    break;
+
+  case SYS_SEEK:
+    seek();
+    break;
+
+  case SYS_TELL:
+    lock_acquire(&fs_lock);
+    ret_val = file_tell(next_arg());
+    lock_release(&fs_lock);
+    break;
+
+  case SYS_CLOSE:
+    close(next_arg());
+    break;
+
+  default:
+    //TODO print error message
+    break;
+  }
+  f->eax = ret_val;
+}
+
+void *next_arg() {//TODO instead of using void *, should use something from stdint
+  validate_word(offset);
+  void *ret_val = *(unsigned int *) offset;
+  offset += sizeof(void *);
+  return ret_val;
+}
+
+char *next_str() {
+  char *s = next_arg();
+  validate_str(s);
+  return s;
+}
+
+void validate_byte(void *ptr) {
+  if(!is_user_vaddr(ptr) || pagedir_get_page(thread_current()->pagedir, ptr) == NULL) {//FIXME make sure the end of the pointer isn't over a page boundery
+    /*if(lock_held_by_current_thread(&fs_lock)) {
+      lock_release(&fs_lock);
+    }*/
+//    process_terminate();
+    thread_exit();
+  }
+}
+
+void validate_range(void *start, void *end) {
+  for(; start <= end; start++) {
+    validate_byte(start);
+  }
+}
+
+void validate_buffer(void *ptr, unsigned size) {
+  validate_range(ptr, ptr + size);
+}
+
+/* used for validating pointers and ints */
+void validate_word(void *ptr) {
+  validate_range(ptr, ptr + sizeof(void *));
+}
+
+void validate_str(char *str) {
+  do {
+    validate_byte(str);
+  } while (*str++ != NULL);
+}
+
+tid_t exec(void) {
+  char *args = next_str();
+  tid_t tid = process_execute(args);
+
+  if(tid != TID_ERROR){
+    struct list_elem *e;
+    struct exit_struct *exit = NULL;
+    // TODO this is used at least 3 times
+    for(e = list_begin(&thread_current()->children); e != list_end(&thread_current()->children); e = list_next(e)) {
+      if(tid == list_entry(e, struct exit_struct, elem)->tid){
+        exit = list_entry(e, struct exit_struct, elem);
+        break;
+      }
+    }
+    sema_down(&exit->running);
+    if(!exit->loaded) {
+      /*list_remove(&exit->elem);
+      free(exit);
+      tid = -1;*/
+      /* This will always return -1 */
+      tid = process_wait(tid);
+    }
+  }
+  return tid;
+}
+
+/*void syscall_exit(int value) {
+  struct exit_struct *ec = thread_current()->exit_controler;
+//  printf("%s: exit(%d)\n", thread_name(), value);
+  ec->value = value;
+//  sema_up(&ec->parent);
+//  sema_up(&thread_current()->exit_controler->running);
+
+  thread_exit();
+}*/
+
+int open(char *file_name) {
+  lock_acquire(&fs_lock);
+  struct file *f = filesys_open(file_name);
+  lock_release(&fs_lock);
+
+  if(f == NULL)
+    return -1;
+
+  //lock_acquire(&thread_current()->fdt_lock);
+  struct file **fdt = thread_current()->fd_table;
+  int fd;
+  for(fd = 2; fdt[fd] != NULL; fd++);
+  fdt[fd] = f;
+  //lock_release(&thread_current()->fdt_lock);
+  return fd;
+}
+
+void close(int fd) {
+  if(fd < 2 || fd >= 128)
+    return;
+
+  //lock_acquire(&thread_current()->fdt_lock);
+  struct file *f = thread_current()->fd_table[fd];
+  if(f != NULL) {
+    lock_acquire(&fs_lock);
+    file_close(f);
+    lock_release(&fs_lock);
+    thread_current()->fd_table[fd] = NULL;
+  }
+  //lock_release(&thread_current()->fdt_lock);
+}
+
+int read() {
+  int fd = next_arg(), ret_val = -1;
+  void *buff = next_arg();
+  unsigned size = next_arg();
+  validate_buffer(buff, size);
+
+  int val;
+
+  //lock_acquire(&thread_current()->fdt_lock);
+  if(fd == STDIN_FILENO){
+    //lock_release(&thread_current()->fdt_lock);
+    char *c = buff;
+    while(c < buff + size){
+      *c++ = input_getc();
+    }
+    ret_val = size;
+  } else if(fd >= 2 && fd < 128 && thread_current()->fd_table[fd] != NULL) {
+    lock_acquire(&fs_lock);
+    ret_val = file_read(thread_current()->fd_table[fd], buff, size);
+    lock_release(&fs_lock);
+    //lock_release(&thread_current()->fdt_lock);
+  }
+  return ret_val;
+}
+
+int write() {
+  int fd = next_arg(), ret_val = -1;
+  void *buff = next_arg();
+  unsigned size = next_arg();
+  validate_buffer(buff, size);
+
+  //lock_acquire(&thread_current()->fdt_lock);
+  if(fd == STDOUT_FILENO) {
+    //lock_release(&thread_current()->fdt_lock);
+    putbuf(buff, size);
+    ret_val = size;
+  } else if(fd >= 2 && fd < 128 && thread_current()->fd_table[fd] != NULL) {
+    lock_acquire(&fs_lock);
+    ret_val = file_write(thread_current()->fd_table[fd], buff, size);
+    lock_release(&fs_lock);
+    //lock_release(&thread_current()->fdt_lock);
+  }
+  return ret_val;
+}
+
+void seek() {
+  int fd = next_arg();
+  unsigned position = next_arg();
+
+  //lock_acquire(&thread_current()->fdt_lock);
+  lock_acquire(&fs_lock);
+  file_seek(thread_current()->fd_table[fd], position);
+  lock_release(&fs_lock);
+  //lock_release(&thread_current()->fdt_lock);
+}

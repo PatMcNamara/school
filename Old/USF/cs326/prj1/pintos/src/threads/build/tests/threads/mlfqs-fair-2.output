@@ -1,0 +1,19 @@
+Writing command line to /tmp/yrZDUo04dj.dsk...
+qemu -hda /tmp/yrZDUo04dj.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -mlfqs run mlfqs-fair-2
+Pintos booting with 4,096 kB RAM...
+374 pages available in kernel pool.
+374 pages available in user pool.
+Calibrating timer...  52,377,600 loops/s.
+Boot complete.
+Executing 'mlfqs-fair-2':
+Kernel PANIC at ../../tests/threads/tests.c:60 in run_test(): no test named "mlfqs-fair-2"
+Call stack: 0xc01075dc 0xc010968d 0xc0100535 0xc0100601 0xc0100094.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 19 ticks
+Thread: 0 idle ticks, 19 kernel ticks, 0 user ticks
+Console: 618 characters output
+Keyboard: 0 keys pressed
+Powering off...

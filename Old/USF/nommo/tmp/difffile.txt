@@ -1,0 +1,670 @@
+diff -r -d -b -X diff_exclude.txt ./threads/synch.c ../../cs326/prj1/pintos/src/threads/synch.c
+35c35,36
+< //TODO changes underway in prj1
+---
+> //extern bool proc_greater_priority(const struct list_elem *, const struct list_elem *, void *);
+> //bool sema_elem_greater_priority(const struct list_elem *, const struct list_elem *, void *);
+74a76
+>       //list_push_back (&sema->waiters, &thread_current ()->elem);
+75a78
+>       //TODO could use a normal insert at head and use of max fnc in list might be better
+230c233
+<       if(current_holder->donated_priority < thread_current()->priority)
+---
+>       if(current_holder->donated_priority < thread_current->priority)
+234c237
+<       current_holder->donated_priority = thread_current()->priority;
+---
+>       current_holder->donated_priority = thread_current->priority;
+246a250,256
+> /*bool lock_less_priority (const struct list_elem *a, const struct list_elem *b, void *aux){
+>   struct lock a_lock = list_entry(a, struct lock, elem);
+>   struct lock b_lock = list_entry(b, struct lock, elem);
+>   
+>   if(a->priority = 
+> }*/
+> 
+262c272
+<   if (success)
+---
+>   if (success) {
+263a274
+>   }
+271c282
+<    handler. */
+---
+>    handler. *///TODO this is not correct.  If an interrupt got a lock from lock_try_acquire then it would need to call release
+404a416,451
+> 
+> /*bool sema_elem_greater_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED) {
+>   struct semaphore_elem sema_elem1;
+>   struct semaphore_elem sema_elem2 = *list_entry(b, struct semaphore_elem, elem);
+>   
+>   sema_elem1 = *list_entry(a, struct semaphore_elem, elem);
+>   
+>   printf("%p\n", &sema_elem1);
+>   
+>   struct semaphore *a_sema = &sema_elem1->semaphore;
+>   struct semaphore *b_sema = &sema_elem2->semaphore;
+> 
+>   struct semaphore *a_sema;
+>   struct semaphore *b_sema;
+>   
+>   a_sema = &list_entry(a, struct semaphore_elem, elem)->semaphore;
+>   b_sema = &list_entry(b, struct semaphore_elem, elem)->semaphore;
+>   
+>   ASSERT (!list_empty(&a_sema->waiters));
+>   ASSERT (!list_empty(&b_sema->waiters));
+>   
+>   bool tmp = proc_greater_priority(list_front(&a_sema->waiters), list_front(&b_sema->waiters), NULL);
+>   
+>   struct thread *a_thread = list_entry(list_head(&a_sema->waiters), struct thread, elem);
+>   struct thread *b_thread = list_entry(list_head(&b_sema->waiters), struct thread, elem);
+>  
+>   printf("a: tid = %d, priority = %d\tb: tid = %d, priority = %d\t",
+>          a_thread->tid, a_thread->priority, b_thread->tid, b_thread->priority);
+>   
+>   if(tmp)
+>     printf("true\n");
+>   else
+>     printf("false\n");
+>   
+>   return tmp;
+> }*/
+Only in ../../cs326/prj1/pintos/src/threads: synch.c.back
+diff -r -d -b -X diff_exclude.txt ./threads/thread.c ../../cs326/prj1/pintos/src/threads/thread.c
+11d10
+< #include "threads/malloc.h"
+25c24
+<    that are ready to run but not actually running. */
+---
+>    that are ready to run but not actually running. *///TODO organized by priority from highest to lowest
+58a58,59
+> //static bool proc_greater_priority(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED);//TODO change name (compare_priority?)
+> 
+97,99d97
+< #ifdef USERPROG
+<   list_init(&initial_thread->children);
+< #endif
+184,186d181
+< #ifdef USERPROG
+<   process_init(t);
+< #endif
+582a578
+> 
+Only in ../../cs326/prj1/pintos/src/threads: thread.c.back
+diff -r -d -b -X diff_exclude.txt ./threads/thread.h ../../cs326/prj1/pintos/src/threads/thread.h
+27,30d26
+< #ifdef USERPROG
+< #include "userprog/process.h"
+< #endif
+< 
+106,111d101
+< 
+<     struct list children;               /* List of children. */
+<     struct exit_struct *exit_controler; /* This threads exit struct */
+< 
+<     struct file *executable;            /* Executable file we are running. */
+<     struct fd_elem *open_files[128];    /* File descriptor table. */
+Only in ../../cs326/prj1/pintos/src/threads: thread.h.back
+diff -r -d -b -X diff_exclude.txt ./userprog/process.c ../../cs326/prj1/pintos/src/userprog/process.c
+11d10
+< #include "userprog/syscall.h"
+19,20d17
+< #include "threads/malloc.h"
+< #include "threads/synch.h"
+24,26d20
+< /* Size of a word */
+< #define WORD_SIZE 4
+< 
+28d21
+< void *parse_args(char **, void *);
+31,44d23
+< /* Initializes parts of t that are owned by process.c */
+< void process_init (struct thread *t) {
+<   struct exit_struct *exit_controler = malloc(sizeof(struct exit_struct));
+<   sema_init(&exit_controler->parent, 0);
+<   sema_init(&exit_controler->running, 0);
+<   exit_controler->tid = t->tid;
+<   exit_controler->value = -1;
+<   exit_controler->loaded = false;
+< 
+<   list_push_back(&thread_current()->children, &exit_controler->elem);
+<   list_init(&t->children);
+<   t->exit_controler = exit_controler;
+< }
+< 
+52,53c31
+<   char *fn_copy, *t;
+<   char thread_name[16];
+---
+>   char *fn_copy;
+63,66d40
+<   /* Get thread name */
+<   strlcpy (thread_name, file_name, 15);
+<   strtok_r(thread_name, " ", &t);
+< 
+68c42
+<   tid = thread_create (thread_name, PRI_DEFAULT, execute_thread, fn_copy);
+---
+>   tid = thread_create (file_name, PRI_DEFAULT, execute_thread, fn_copy);
+79c53
+<   char *position, *s;
+---
+>   char *file_name = file_name_;
+83,85d56
+<   /* Initialize s to file name */
+<   s = strtok_r(file_name_, " ", &position);
+< 
+91,112c62
+<   lock_acquire(&fs_lock);
+<   success = load (s, &if_.eip, &if_.esp);
+<   lock_release(&fs_lock);
+< 
+<   if(success) {
+<     /* Create arg list at bottom of temp page pg. */
+<     void *pg = palloc_get_page(0);
+<     if(pg != NULL) {
+<       char **tmp = pg;
+< 
+<       for(; s != NULL; s = strtok_r(NULL, " ", &position)) {
+<         if_.esp -= strlen(s) + 1;
+<         strlcpy(if_.esp, s, strlen(s) + 1);
+<         *tmp++ = if_.esp;
+<       }
+< 
+<       if_.esp = parse_args(tmp, if_.esp);
+<       palloc_free_page(pg);
+<     } else {
+<       success = false;
+<     }
+<   }
+---
+>   success = load (file_name, &if_.eip, &if_.esp);
+115,117c65
+<   palloc_free_page (file_name_);
+<   thread_current()->exit_controler->loaded = success;
+<   sema_up(&thread_current()->exit_controler->running);
+---
+>   palloc_free_page (file_name);
+136c84,87
+<    immediately, without waiting. */
+---
+>    immediately, without waiting.
+> 
+>    This function will be implemented in problem 2-2.  For now, it
+>    does nothing. */
+138c89
+< process_wait (tid_t child_tid)
+---
+> process_wait (tid_t child_tid UNUSED) 
+140,163c91
+<   int ret_val;
+<   struct list_elem *e;
+<   struct exit_struct *exit = NULL;
+< 
+<   /* Find child_tid in list of children. */
+<   for(e = list_begin(&thread_current()->children); e != list_end(&thread_current()->children); e = list_next(e)) {
+<     if(child_tid == list_entry(e, struct exit_struct, elem)->tid){
+<       exit = list_entry(e, struct exit_struct, elem);
+<       break;
+<     }
+<   }
+< 
+<   /* If child_tid not on children's list, return -1. */
+<   if(exit == NULL)
+<     ret_val = -1;
+<   else {
+<     /* Wait for child to call exit. */
+<     sema_down(&exit->parent);
+<     /* Get exit value and free the exit_struct's resources. */
+<     ret_val = exit->value;
+<     list_remove(&exit->elem);
+<     free(exit);
+<   }
+<   return ret_val;
+---
+>   return -1;
+173,192d100
+<   /* Some user pointer validation might fail after acquiring the fs lock. */
+<   if(!lock_held_by_current_thread(&fs_lock))
+<     lock_acquire(&fs_lock);
+< 
+<   /* Re-enable writing to executable. */
+<   if(cur->executable != NULL)
+<     file_close(cur->executable);
+<   lock_release(&fs_lock);
+< 
+<   /* Close any open files */
+<   int i;
+<   for(i = 2; i < 128; i++)
+<     syscall_close(i);
+< 
+<   /* Clean up any remaining children */
+<   struct list_elem *e;
+<   for(e = list_begin(&cur->children); e!= list_end(&cur->children); e = list_begin(&cur->children)) {
+<     process_wait(list_entry(e, struct exit_struct, elem)->tid);
+<   }
+< 
+198,204d105
+<       /* Print exit message */
+<       printf("%s: exit(%d)\n", cur->name, cur->exit_controler->value);
+< 
+<       /* Release waiting parent */
+<       sema_up(&cur->exit_controler->parent);
+<       sema_up(&cur->exit_controler->running);
+< 
+233,262d133
+< void *parse_args (char **plist_end, void *esp) {
+<   char **tmp;
+<   ptrdiff_t len = (void *) plist_end - pg_round_down(plist_end);
+< 
+<   /* Word align arg list */
+<   esp -= ((unsigned int) esp) % WORD_SIZE;
+< 
+<   /* Terminate arg list with null */
+<   esp -= sizeof(char *);
+< 
+<   /* Copy arg list to bottom of stack */
+<   esp -= len;
+<   memcpy(esp, pg_round_down(plist_end), len);
+< 
+<   /* Push argv */
+<   esp -= sizeof(char **);
+<   tmp = (char**) esp;
+<   *tmp = esp + sizeof(char **);
+< 
+<   /* Push argc */
+<   esp -= sizeof(int);
+<   *(int *)esp = len / sizeof(char *);
+< 
+<   /* Push fake return address */
+<   esp -= sizeof(void *);
+< 
+<   return esp;
+< }
+< 
+< 
+443,448c314
+<   thread_current()->executable = file;
+<   if(success)
+<     file_deny_write (file);
+<   else if(t->pagedir == NULL)
+<     /* If pagedir doesn't load, sema_up is never called in process_exit. */
+<     sema_up(&t->exit_controler->running);
+---
+>   file_close (file);
+diff -r -d -b -X diff_exclude.txt ./userprog/process.h ../../cs326/prj1/pintos/src/userprog/process.h
+4d3
+< #include <list.h>
+6,24d4
+< #include "threads/synch.h"
+< 
+< /* Holds data used by parent to keep track of child's execution status. */
+< struct exit_struct
+<   {
+<     tid_t tid;                /* Child's tid. */
+<     int value;                /* Child's exit status. */
+<     bool loaded;              /* Did child successfully load? */
+<     struct semaphore running, /* Is upped when child finishes loading. */
+<                      parent;  /* Is upped when child exits. */
+<     struct list_elem elem;
+<   };
+< 
+< /* A file descriptor */
+< struct fd_elem
+< {
+<    int fd;
+<    struct file *file;
+< };
+27d6
+< void process_init (struct thread *);
+diff -r -d -b -X diff_exclude.txt ./userprog/syscall.c ../../cs326/prj1/pintos/src/userprog/syscall.c
+3d2
+< #include <stdint.h>
+7,15d5
+< #include "threads/init.h"
+< #include "threads/synch.h"
+< #include "threads/vaddr.h"
+< #include "threads/malloc.h"
+< #include "userprog/process.h"
+< #include "userprog/pagedir.h"
+< #include "filesys/filesys.h"
+< #include "filesys/file.h"
+< #include "devices/input.h"
+19,36d8
+< /* Syscall helper functions. */
+< tid_t syscall_exec(const char *);
+< int syscall_open(const char *);
+< int syscall_read(void);
+< int syscall_write(void);
+< void syscall_seek(void);
+< bool syscall_create(void);
+< 
+< /* Gets and validates the next arg off the stack. */
+< void *next_arg(void);
+< char *next_str(void);
+< 
+< /* Validates user supplied buffer. (kills the thread if validation fails. */
+< void validate_buffer(void *ptr, size_t size);
+< 
+< /* Location of next 4 byte arg (used by next_arg and nxt_str). */
+< void *offset;
+< 
+41d12
+<   lock_init(&fs_lock);
+44,49d14
+< /* Handles syscalls. Either directly runs simple system calls or calls
+<    appropriate helper function for more complex ones. Helper functions
+<    that take no input read their arguments directly off the stack (via
+<    the next_arg() and next_str() functions) and you shouldn't get any
+<    arguments before (or after) calling these functions (except when
+<    getting the syscall number). */
+51,168c16
+< syscall_handler (struct intr_frame *f)
+< {
+<   uint32_t ret_val = 0;
+<   struct fd_elem **fdt = thread_current()->open_files;
+<   offset = f->esp;
+<   int sys_call = (int) next_arg();
+< 
+<   switch (sys_call) {
+<   case SYS_HALT:
+<     power_off();
+<     NOT_REACHED ();
+< 
+<   case SYS_EXIT:
+<     thread_current()->exit_controler->value = (int) next_arg();
+<     thread_exit();
+<     NOT_REACHED ();
+< 
+<   case SYS_EXEC:
+<     ret_val = syscall_exec((const char *) next_str());
+<     break;
+< 
+<   case SYS_WAIT:
+<     ret_val = process_wait((tid_t) next_arg());
+<     break;
+< 
+<   case SYS_CREATE:
+<     ret_val = syscall_create();
+<     break;
+< 
+<   case SYS_REMOVE:
+<     lock_acquire(&fs_lock);
+<     ret_val = filesys_remove((const char *) next_str());
+<     lock_release(&fs_lock);
+<     break;
+< 
+<   case SYS_OPEN:
+<     ret_val = syscall_open((const char *)next_str());
+<     break;
+< 
+<   case SYS_FILESIZE:
+<     lock_acquire(&fs_lock);
+<     ret_val = file_length(fdt[(int) next_arg()]->file);
+<     lock_release(&fs_lock);
+<     break;
+< 
+<   case SYS_READ:
+<     ret_val = syscall_read();
+<     break;
+< 
+<   case SYS_WRITE:
+<     ret_val = syscall_write();
+<     break;
+< 
+<   case SYS_SEEK:
+<     syscall_seek();
+<     break;
+< 
+<   case SYS_TELL:
+<     lock_acquire(&fs_lock);
+<     ret_val = file_tell(fdt[(int) next_arg()]->file);
+<     lock_release(&fs_lock);
+<     break;
+< 
+<   case SYS_CLOSE:
+<     syscall_close((int) next_arg());
+<     break;
+< 
+<   default:
+<     /* Invalid system call number. */
+<     ret_val = -1;
+<     break;
+<   }
+<   /* Set calling process's eax register to the return value. */
+<   f->eax = ret_val;
+< }
+< 
+< /* Exec's a process with the given command line arguments.
+<    Returns tid of exec'd thread or -1 if exec failed. */
+< tid_t syscall_exec(const char *cmd_line) {
+<   tid_t tid = process_execute(cmd_line);
+< 
+<   if(tid != TID_ERROR){
+<     /* If a thread was created, wait for it to finish loading executable. */
+<     struct list_elem *e;
+<     struct exit_struct *exit = NULL;
+< 
+<     /* Get exit_struct of created child. */
+<     for(e = list_begin(&thread_current()->children); e != list_end(&thread_current()->children); e = list_next(e)) {
+<       if(tid == list_entry(e, struct exit_struct, elem)->tid){
+<         exit = list_entry(e, struct exit_struct, elem);
+<         break;
+<       }
+<     }
+< 
+<     /* Wait for child to finish loading. */
+<     sema_down(&exit->running);
+<     if(!exit->loaded)
+<       /* If loading failed, free child's exit_struct and return -1. */
+<       tid = process_wait(tid); /* This line will always set tid = -1. */
+<   }
+<   return tid;
+< }
+< 
+< /* Creates a file and returns success. */
+< bool syscall_create() {
+<   bool ret_val;
+<   const char *file = next_str();
+<   unsigned initial_size = (unsigned) next_arg();
+< 
+<   lock_acquire(&fs_lock);
+<   ret_val = filesys_create(file, initial_size);
+<   lock_release(&fs_lock);
+< 
+<   return ret_val;
+< }
+< 
+< /* Reads a file into specified buffer and returns number of chars read or -1. */
+< int syscall_read()
+---
+> syscall_handler (struct intr_frame *f UNUSED) 
+170,343c18,19
+<   int ret_val;
+<   struct fd_elem **fdt = thread_current()->open_files;
+<   /* Get arguments off stack. */
+<   int fd = (int) next_arg();
+<   void *buf = next_arg();
+<   unsigned size = (unsigned) next_arg();
+< 
+<   /* Verify user supplied buffer is valid. */
+<   validate_buffer(buf, size);
+< 
+<   if(fd == STDIN_FILENO) {
+<     /* Read from stdin. */
+<     char *c = buf;
+<     while((void *) c < buf + size){
+<       *c++ = input_getc();
+<     }
+<     ret_val = size;
+< 
+<   } else if(fd >= 2 && fd < 128 && fdt[fd] != NULL) {
+<     /* If fd is valid, read from file. */
+<     lock_acquire(&fs_lock);
+<     ret_val = file_read(fdt[fd]->file, buf, size);
+<     lock_release(&fs_lock);
+< 
+<   } else {
+<     /* fd not valid. */
+<     ret_val = -1;
+<   }
+< 
+<   return ret_val;
+< }
+< 
+< /* Writes a file into specified buffer and returns number of chars written or -1. */
+< int syscall_write(void){
+<   int ret_val;
+<   struct fd_elem **fdt = thread_current()->open_files;
+<   /* Get arguments off stack. */
+<   int fd = (int) next_arg();
+<   void *buf = next_arg();
+<   unsigned size = (unsigned) next_arg();
+< 
+<   /* Verify user supplied buffer is valid. */
+<   validate_buffer(buf, size);
+< 
+<   if (fd == STDOUT_FILENO){
+<     /* Write to stdout. */
+<     putbuf(buf, size);
+<     ret_val = size;
+< 
+<   } else if (fd >= 2 && fd < 128 && fdt[fd] != NULL){
+<     /* If fd is valid, read from file. */
+<     lock_acquire(&fs_lock);
+<     ret_val = file_write(fdt[fd]->file, buf, size);
+<     lock_release(&fs_lock);
+<   } else {
+<     /* fd not valid. */
+<     ret_val = -1;
+<   }
+<   return ret_val;
+< }
+< 
+< /* Closes a file. */
+< void syscall_close(int fd) {
+<   /* Check fd is valid. */
+<   if(fd < 2 || fd >= 128)
+<     return;
+< 
+<   struct fd_elem *fde = thread_current()->open_files[fd];
+<   /* If fd is open, close it, free the fd_elem and set fdt[fd] to null. */
+<   if(fde != NULL) {
+<     lock_acquire(&fs_lock);
+<     file_close(fde->file);
+<     lock_release(&fs_lock);
+<     free(fde);
+<     thread_current()->open_files[fd] = NULL;
+<   }
+< }
+< 
+< /* Open specified file and return fd. */
+< int syscall_open(const char *file_name){
+<   int fd;
+<   struct fd_elem *fd_elem, **fdt = thread_current()->open_files;
+<   struct file *f;
+< 
+<   /* Get first available fd and ensure it's valid. */
+<   for(fd = 2; fdt[fd] != NULL && fd < 128; fd++);
+<   if(fd == 128)
+<     return -1;
+< 
+<   /* Open file */
+<   lock_acquire(&fs_lock);
+<   f = filesys_open(file_name);
+<   lock_release(&fs_lock);
+< 
+<   /* Check that file was opened. */
+<   if(f == NULL)
+<     return -1;
+< 
+<   /* Create new fd_elem and add it to the file table. */
+<   fd_elem = (struct fd_elem *) malloc(sizeof(struct fd_elem));
+<   fd_elem->fd=fd;
+<   fd_elem->file = f;
+<   fdt[fd] = fd_elem;
+< 
+<   return fd;
+< }
+< 
+< /* Seek to given byte in file. */
+< void syscall_seek() {
+<   int fd = (int) next_arg();
+<   unsigned position = (unsigned) next_arg();
+< 
+<   lock_acquire(&fs_lock);
+<   file_seek(thread_current()->open_files[fd]->file, position);
+<   lock_release(&fs_lock);
+< }
+< 
+< /* Helper functions for validating user pointers. */
+< void validate_byte(void *);
+< void validate_word(void *);
+< void validate_range(void *, void *);
+< void validate_str(char *);
+< 
+< /* Pops the next arguement off the stack and checks that it is a valid pointer. */
+< void *next_arg() {
+<   validate_word(offset);
+<   void *ret_val = *(unsigned int *) offset;
+<   offset += sizeof(void *);
+<   return ret_val;
+< }
+< 
+< /* Pops the next arguement off the stack and checks it is a valid string. */
+< char *next_str() {
+<   char *s = (char *) next_arg();
+<   validate_str(s);
+<   return s;
+< }
+< 
+< /* Validates a single byte.  If the byte isn't a valid virtual memory
+<    location, the program will be terminated an with exit status of -1.
+<    This function shouldn't be called directly but instead one should
+<    use the other validate functions (which in turn call this function). */
+< void validate_byte(void *ptr) {
+<   if(!is_user_vaddr(ptr) || pagedir_get_page(thread_current()->pagedir, ptr) == NULL)
+<     thread_exit();
+< }
+< 
+< /* Validates all pointers between start and end in a few page table
+<    inspections as possible. Same notes as validate_byte(). */
+< void validate_range(void *start, void *end) {
+<   int i;
+<   for(i = pg_no(end) - pg_no(start); i >= 0; i--)
+<     validate_byte(start + (PGSIZE * i));
+< }
+< 
+< /* Validates all pointers within the given buffer.  This is the validation
+<    function that should be called with a few exceptions as it uses the other
+<    functions as helper functions to assist with the validation. */
+< void validate_buffer(void *ptr, size_t size) {
+<   validate_range(ptr, ptr + size);
+< }
+< 
+< /* Validates any word sized object.  Called by next_arg to validate words
+<    it pulls off the stack. */
+< void validate_word(void *ptr) {
+<   validate_range(ptr, ptr + sizeof(void *));
+< }
+< 
+< /* Validates an entire string.  It's main job it to help next_str() with
+<    validation. */
+< void validate_str(char *str) {
+<   do {
+<     validate_byte(str);
+<   } while (*str++ != '\0');
+---
+>   printf ("system call!\n");
+>   thread_exit ();
+diff -r -d -b -X diff_exclude.txt ./userprog/syscall.h ../../cs326/prj1/pintos/src/userprog/syscall.h
+4,8d3
+< #include "threads/synch.h"
+< 
+< /* Controls access to file system. */
+< struct lock fs_lock;
+< 
+10d4
+< void syscall_close(int);

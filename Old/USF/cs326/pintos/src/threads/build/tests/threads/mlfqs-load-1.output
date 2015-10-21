@@ -1,0 +1,11 @@
+Writing command line to /tmp/Ro8vg5vSiz.dsk...
+qemu -hda /tmp/Ro8vg5vSiz.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -mlfqs run mlfqs-load-1
+Pintos booting with 4,096 kB RAM...
+375 pages available in kernel pool.
+374 pages available in user pool.
+Calibrating timer...  27,852,800 loops/s.
+Boot complete.
+Executing 'mlfqs-load-1':
+(mlfqs-load-1) begin
+(mlfqs-load-1) spinning for up to 45 seconds, please wait...

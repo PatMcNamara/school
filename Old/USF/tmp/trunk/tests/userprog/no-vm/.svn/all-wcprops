@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/5/trunk/tests/userprog/no-vm
+END
+multi-oom.c
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/nommo/!svn/ver/5/trunk/tests/userprog/no-vm/multi-oom.c
+END
+Rubric
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/nommo/!svn/ver/5/trunk/tests/userprog/no-vm/Rubric
+END
+Make.tests
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/nommo/!svn/ver/5/trunk/tests/userprog/no-vm/Make.tests
+END
+multi-oom.ck
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/nommo/!svn/ver/5/trunk/tests/userprog/no-vm/multi-oom.ck
+END

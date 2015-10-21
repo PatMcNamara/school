@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/nommo/!svn/ver/41/tags/prj2/examples
+END
+cp.c
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/nommo/!svn/ver/41/tags/prj2/examples/cp.c
+END
+recursor.c
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/nommo/!svn/ver/41/tags/prj2/examples/recursor.c
+END
+mkdir.c
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/nommo/!svn/ver/41/tags/prj2/examples/mkdir.c
+END
+shell.c
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/nommo/!svn/ver/41/tags/prj2/examples/shell.c
+END
+cat.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/41/tags/prj2/examples/cat.c
+END
+rm.c
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/nommo/!svn/ver/41/tags/prj2/examples/rm.c
+END
+echo.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/41/tags/prj2/examples/echo.c
+END
+insult.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/41/tags/prj2/examples/insult.c
+END
+ls.c
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/nommo/!svn/ver/41/tags/prj2/examples/ls.c
+END
+cmp.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/41/tags/prj2/examples/cmp.c
+END
+mcp.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/41/tags/prj2/examples/mcp.c
+END
+bubsort.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/nommo/!svn/ver/41/tags/prj2/examples/bubsort.c
+END
+matmult.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/nommo/!svn/ver/41/tags/prj2/examples/matmult.c
+END
+mcat.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/41/tags/prj2/examples/mcat.c
+END
+hex-dump.c
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/nommo/!svn/ver/41/tags/prj2/examples/hex-dump.c
+END
+halt.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/41/tags/prj2/examples/halt.c
+END
+pwd.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/41/tags/prj2/examples/pwd.c
+END
+lineup.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/41/tags/prj2/examples/lineup.c
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/41/tags/prj2/examples/Makefile
+END
+.cvsignore
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/nommo/!svn/ver/41/tags/prj2/examples/.cvsignore
+END

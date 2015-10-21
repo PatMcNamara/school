@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/nommo/!svn/ver/58/branches/print/lib
+END
+string.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/58/branches/print/lib/string.c
+END
+limits.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/58/branches/print/lib/limits.h
+END
+stdint.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/58/branches/print/lib/stdint.h
+END
+string.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/58/branches/print/lib/string.h
+END
+stdbool.h
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/nommo/!svn/ver/58/branches/print/lib/stdbool.h
+END
+stddef.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/58/branches/print/lib/stddef.h
+END
+random.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/58/branches/print/lib/random.c
+END
+stdlib.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/58/branches/print/lib/stdlib.c
+END
+stdio.c
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/nommo/!svn/ver/58/branches/print/lib/stdio.c
+END
+inttypes.h
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/nommo/!svn/ver/58/branches/print/lib/inttypes.h
+END
+random.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/58/branches/print/lib/random.h
+END
+stdlib.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/58/branches/print/lib/stdlib.h
+END
+debug.c
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/nommo/!svn/ver/58/branches/print/lib/debug.c
+END
+stdio.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/nommo/!svn/ver/58/branches/print/lib/stdio.h
+END
+ctype.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/nommo/!svn/ver/58/branches/print/lib/ctype.h
+END
+stdarg.h
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/58/branches/print/lib/stdarg.h
+END
+arithmetic.c
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/nommo/!svn/ver/58/branches/print/lib/arithmetic.c
+END
+debug.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/nommo/!svn/ver/58/branches/print/lib/debug.h
+END
+round.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/nommo/!svn/ver/58/branches/print/lib/round.h
+END
+syscall-nr.h
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/nommo/!svn/ver/58/branches/print/lib/syscall-nr.h
+END

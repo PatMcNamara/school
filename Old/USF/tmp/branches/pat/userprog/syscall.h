@@ -1,0 +1,11 @@
+#ifndef USERPROG_SYSCALL_H
+#define USERPROG_SYSCALL_H
+
+void syscall_init (void);
+//void syscall_exit(int);//TODO instead of making this public you could just add code to process_exit
+//void validate_word(void *);
+void close(int fd);
+
+/*static*/ struct lock fs_lock;
+
+#endif /* userprog/syscall.h */

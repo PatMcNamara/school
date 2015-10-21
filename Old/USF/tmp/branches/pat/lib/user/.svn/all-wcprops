@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/nommo/!svn/ver/7/branches/pat/lib/user
+END
+user.lds
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/nommo/!svn/ver/7/branches/pat/lib/user/user.lds
+END
+syscall.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/nommo/!svn/ver/7/branches/pat/lib/user/syscall.h
+END
+entry.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/nommo/!svn/ver/7/branches/pat/lib/user/entry.c
+END
+console.c
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/nommo/!svn/ver/7/branches/pat/lib/user/console.c
+END
+debug.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/nommo/!svn/ver/7/branches/pat/lib/user/debug.c
+END
+stdio.h
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/nommo/!svn/ver/7/branches/pat/lib/user/stdio.h
+END
+syscall.c
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/nommo/!svn/ver/7/branches/pat/lib/user/syscall.c
+END

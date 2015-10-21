@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/pjmcnamara2/!svn/ver/5/cs210/1-22
+END
+demo1
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/pjmcnamara2/!svn/ver/5/cs210/1-22/demo1
+END
+demo1.c
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/pjmcnamara2/!svn/ver/5/cs210/1-22/demo1.c
+END
+demo2
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/pjmcnamara2/!svn/ver/5/cs210/1-22/demo2
+END
+demo2.s
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/pjmcnamara2/!svn/ver/5/cs210/1-22/demo2.s
+END

@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/pjmcnamara2/!svn/ver/99/cs326/prj0/pintos/src/misc
+END
+bochs-2.2.6-page-fault-segv.patch
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/pjmcnamara2/!svn/ver/99/cs326/prj0/pintos/src/misc/bochs-2.2.6-page-fault-segv.patch
+END
+bochs-2.2.6-solaris-link.patch
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/pjmcnamara2/!svn/ver/99/cs326/prj0/pintos/src/misc/bochs-2.2.6-solaris-link.patch
+END
+bochs-2.2.6-triple-fault.patch
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/pjmcnamara2/!svn/ver/99/cs326/prj0/pintos/src/misc/bochs-2.2.6-triple-fault.patch
+END
+gcc-3.3.6-cross-howto
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/pjmcnamara2/!svn/ver/99/cs326/prj0/pintos/src/misc/gcc-3.3.6-cross-howto
+END
+bochs-2.2.6-build.sh
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/pjmcnamara2/!svn/ver/99/cs326/prj0/pintos/src/misc/bochs-2.2.6-build.sh
+END
+bochs-2.2.6-paranoia.patch
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/pjmcnamara2/!svn/ver/99/cs326/prj0/pintos/src/misc/bochs-2.2.6-paranoia.patch
+END
+bochs-2.2.6-solaris-tty.patch
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/pjmcnamara2/!svn/ver/99/cs326/prj0/pintos/src/misc/bochs-2.2.6-solaris-tty.patch
+END
+bochs-2.2.6-ms-extensions.patch
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/pjmcnamara2/!svn/ver/99/cs326/prj0/pintos/src/misc/bochs-2.2.6-ms-extensions.patch
+END
+bochs-2.2.6-big-endian.patch
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/pjmcnamara2/!svn/ver/99/cs326/prj0/pintos/src/misc/bochs-2.2.6-big-endian.patch
+END
+bochs-2.2.6-jitter.patch
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/pjmcnamara2/!svn/ver/99/cs326/prj0/pintos/src/misc/bochs-2.2.6-jitter.patch
+END
+gdb-macros
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/pjmcnamara2/!svn/ver/99/cs326/prj0/pintos/src/misc/gdb-macros
+END

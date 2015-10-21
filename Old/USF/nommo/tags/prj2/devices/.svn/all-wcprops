@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/nommo/!svn/ver/41/tags/prj2/devices
+END
+disk.h
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/41/tags/prj2/devices/disk.h
+END
+input.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/41/tags/prj2/devices/input.c
+END
+serial.c
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/nommo/!svn/ver/41/tags/prj2/devices/serial.c
+END
+intq.h
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/41/tags/prj2/devices/intq.h
+END
+kbd.c
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/nommo/!svn/ver/41/tags/prj2/devices/kbd.c
+END
+timer.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/41/tags/prj2/devices/timer.c
+END
+vga.h
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/nommo/!svn/ver/41/tags/prj2/devices/vga.h
+END
+input.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/41/tags/prj2/devices/input.h
+END
+serial.h
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/nommo/!svn/ver/41/tags/prj2/devices/serial.h
+END
+kbd.h
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/nommo/!svn/ver/41/tags/prj2/devices/kbd.h
+END
+timer.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/41/tags/prj2/devices/timer.h
+END
+disk.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/41/tags/prj2/devices/disk.c
+END
+intq.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/41/tags/prj2/devices/intq.c
+END
+vga.c
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/nommo/!svn/ver/41/tags/prj2/devices/vga.c
+END

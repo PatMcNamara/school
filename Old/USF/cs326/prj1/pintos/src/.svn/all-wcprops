@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/pjmcnamara2/!svn/ver/107/cs326/prj1/pintos/src
+END
+Make.config
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/pjmcnamara2/!svn/ver/111/cs326/prj1/pintos/src/Make.config
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/pjmcnamara2/!svn/ver/107/cs326/prj1/pintos/src/LICENSE
+END
+Makefile.userprog
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/pjmcnamara2/!svn/ver/107/cs326/prj1/pintos/src/Makefile.userprog
+END
+Makefile.build
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/pjmcnamara2/!svn/ver/107/cs326/prj1/pintos/src/Makefile.build
+END
+Makefile.kernel
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/pjmcnamara2/!svn/ver/107/cs326/prj1/pintos/src/Makefile.kernel
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/pjmcnamara2/!svn/ver/107/cs326/prj1/pintos/src/Makefile
+END

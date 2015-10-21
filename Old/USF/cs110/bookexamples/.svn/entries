@@ -1,0 +1,95 @@
+8
+
+dir
+87
+https://www.cs.usfca.edu/svn/pjmcnamara2/cs110/bookexamples
+https://www.cs.usfca.edu/svn/pjmcnamara2
+
+
+
+2008-02-25T06:24:28.947794Z
+5
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+12f3d7e9-a5b0-4746-bf85-ad75b41ecfd1
+
+imagesInLabels
+dir
+
+.project
+file
+
+
+
+
+2008-09-02T21:45:06.000000Z
+b0d380fc72c255b25fed15d5c1f2f380
+2008-02-25T06:24:28.947794Z
+5
+
+nestedPanels
+dir
+
+panelClass
+dir
+
+framesPanelsAndLabels
+dir
+
+appletsAndPaint
+dir
+
+eventListener
+dir
+
+OOGraphics
+dir
+
+.classpath
+file
+
+
+
+
+2008-09-02T21:45:06.000000Z
+571811f5bb46ebf6a3aff2bbf594141e
+2008-02-25T06:24:28.947794Z
+5
+
+boarders
+dir
+
+drawingWithLoops
+dir
+
+multipleButtons
+dir
+
+textFields
+dir
+
+drawingAndColor
+dir
+
+layout
+dir
+
+radioButtons
+dir
+
+checkBoxes
+dir
+

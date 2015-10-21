@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/nommo/!svn/ver/6/branches/andrew/devices
+END
+disk.h
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/nommo/!svn/ver/6/branches/andrew/devices/disk.h
+END
+input.c
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/nommo/!svn/ver/6/branches/andrew/devices/input.c
+END
+serial.c
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/nommo/!svn/ver/6/branches/andrew/devices/serial.c
+END
+intq.h
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/nommo/!svn/ver/6/branches/andrew/devices/intq.h
+END
+kbd.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/nommo/!svn/ver/6/branches/andrew/devices/kbd.c
+END
+timer.c
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/nommo/!svn/ver/6/branches/andrew/devices/timer.c
+END
+vga.h
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/nommo/!svn/ver/6/branches/andrew/devices/vga.h
+END
+input.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/nommo/!svn/ver/6/branches/andrew/devices/input.h
+END
+serial.h
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/nommo/!svn/ver/6/branches/andrew/devices/serial.h
+END
+kbd.h
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/nommo/!svn/ver/6/branches/andrew/devices/kbd.h
+END
+timer.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/nommo/!svn/ver/6/branches/andrew/devices/timer.h
+END
+disk.c
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/nommo/!svn/ver/6/branches/andrew/devices/disk.c
+END
+intq.c
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/nommo/!svn/ver/6/branches/andrew/devices/intq.c
+END
+vga.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/nommo/!svn/ver/6/branches/andrew/devices/vga.c
+END

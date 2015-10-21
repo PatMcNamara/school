@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/nommo/!svn/ver/50/trunk/utils
+END
+backtrace
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/nommo/!svn/ver/50/trunk/utils/backtrace
+END
+setitimer-helper.c
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/nommo/!svn/ver/50/trunk/utils/setitimer-helper.c
+END
+pintos-gdb
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/nommo/!svn/ver/50/trunk/utils/pintos-gdb
+END
+squish-pty.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/50/trunk/utils/squish-pty.c
+END
+pintos
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/nommo/!svn/ver/50/trunk/utils/pintos
+END
+pintos-mkdisk
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/50/trunk/utils/pintos-mkdisk
+END
+.cvsignore
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/nommo/!svn/ver/50/trunk/utils/.cvsignore
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/nommo/!svn/ver/50/trunk/utils/Makefile
+END
+squish-unix.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/50/trunk/utils/squish-unix.c
+END

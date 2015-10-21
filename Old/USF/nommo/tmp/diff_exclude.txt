@@ -1,0 +1,9 @@
+diff_exclude.txt
+difffile.txt
+build
+tests
+.svn
+*~
+prep
+timer.c*
+Make.config

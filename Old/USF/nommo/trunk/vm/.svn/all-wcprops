@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/nommo/!svn/ver/78/trunk/vm
+END
+frame.h
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/nommo/!svn/ver/76/trunk/vm/frame.h
+END
+swap.h
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/nommo/!svn/ver/76/trunk/vm/swap.h
+END
+page.h
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/nommo/!svn/ver/77/trunk/vm/page.h
+END
+Make.vars
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/nommo/!svn/ver/50/trunk/vm/Make.vars
+END
+frame.c
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/nommo/!svn/ver/76/trunk/vm/frame.c
+END
+swap.c
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/nommo/!svn/ver/76/trunk/vm/swap.c
+END
+.cvsignore
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/nommo/!svn/ver/50/trunk/vm/.cvsignore
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/nommo/!svn/ver/50/trunk/vm/Makefile
+END
+page.c
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/nommo/!svn/ver/78/trunk/vm/page.c
+END

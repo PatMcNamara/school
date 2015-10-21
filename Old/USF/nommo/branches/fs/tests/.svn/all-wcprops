@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/nommo/!svn/ver/52/branches/fs/tests
+END
+arc4.h
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/52/branches/fs/tests/arc4.h
+END
+lib.pm
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/52/branches/fs/tests/lib.pm
+END
+lib.c
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/nommo/!svn/ver/52/branches/fs/tests/lib.c
+END
+random.pm
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/52/branches/fs/tests/random.pm
+END
+lib.h
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/nommo/!svn/ver/52/branches/fs/tests/lib.h
+END
+cksum.pm
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/nommo/!svn/ver/52/branches/fs/tests/cksum.pm
+END
+make-grade
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/nommo/!svn/ver/52/branches/fs/tests/make-grade
+END
+cksum.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/52/branches/fs/tests/cksum.c
+END
+arc4.pm
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/52/branches/fs/tests/arc4.pm
+END
+main.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/52/branches/fs/tests/main.c
+END
+cksum.h
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/52/branches/fs/tests/cksum.h
+END
+arc4.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/52/branches/fs/tests/arc4.c
+END
+main.h
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/52/branches/fs/tests/main.h
+END
+tests.pm
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/nommo/!svn/ver/52/branches/fs/tests/tests.pm
+END
+Make.tests
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/nommo/!svn/ver/52/branches/fs/tests/Make.tests
+END

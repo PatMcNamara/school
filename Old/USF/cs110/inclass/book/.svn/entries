@@ -1,0 +1,50 @@
+8
+
+dir
+87
+https://www.cs.usfca.edu/svn/pjmcnamara2/cs110/inclass/book
+https://www.cs.usfca.edu/svn/pjmcnamara2
+
+
+
+2008-02-25T06:24:28.947794Z
+5
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+12f3d7e9-a5b0-4746-bf85-ad75b41ecfd1
+
+Book.java
+file
+
+
+
+
+2008-09-02T21:45:07.000000Z
+a4b516a3ea1d3b0ebe1e6fa34756ab53
+2008-02-25T06:24:28.947794Z
+5
+
+BookShelf.java
+file
+
+
+
+
+2008-09-02T21:45:07.000000Z
+b471b68037760667a5b41c9b6bef1fe9
+2008-02-25T06:24:28.947794Z
+5
+

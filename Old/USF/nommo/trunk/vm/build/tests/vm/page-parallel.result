@@ -1,0 +1,29 @@
+FAIL
+Kernel panic in run: PANIC at ../../threads/synch.c:197 in lock_acquire(): assertion `!lock_held_by_current_thread (lock)' failed.
+Call stack: 0xc0109240 0xc01032f7 0xc0110a15 0xc0110e72 0xc010b8b4 0xc0111011 0xc010bdd0 0xc0101358 0xc010d64d 0xc010190f 0xc0101e9f 0xc0110b84 0xc0110c66 0xc0111078 0xc010d630 0xc010190f 0xc0101e9f 0x80481df 0x8048125 0x8048968
+Translation of call stack:
+In kernel.o:
+0xc0109240: debug_panic (.../../lib/kernel/debug.c:34)
+0xc01032f7: lock_acquire (...../../threads/synch.c:197)
+0xc0110a15: frame_free (...uild/../../vm/frame.c:252)
+0xc0110e72: destroy_hash_elem (...build/../../vm/page.c:206)
+0xc010b8b4: hash_clear (..../../lib/kernel/hash.c:63)
+0xc0111011: page_destroy_all (...build/../../vm/page.c:157)
+0xc010bdd0: process_exit (...../userprog/process.c:235)
+0xc0101358: thread_exit (..../../threads/thread.c:292)
+0xc010d64d: page_fault (.../userprog/exception.c:187)
+0xc010190f: intr_handler (..../threads/interrupt.c:377)
+0xc0101e9f: intr_entry (threads/intr-stubs.S:38)
+0xc0110b84: get_frame_for_eviction (...uild/../../vm/frame.c:106)
+0xc0110c66: frame_alloc (...build/../../vm/frame.c:59)
+0xc0111078: page_load (.../build/../../vm/page.c:60)
+0xc010d630: page_fault (.../userprog/exception.c:196)
+0xc010190f: intr_handler (..../threads/interrupt.c:377)
+0xc0101e9f: intr_entry (threads/intr-stubs.S:38)
+In tests/vm/page-parallel:
+0x080481df: test_main (...sts/vm/page-parallel.c:20)
+0x08048125: test_main (...sts/vm/page-parallel.c:16)
+0x08048968: random_init (...ild/../../lib/random.c:40)
+Translations of user virtual addresses above are based on a guess at
+the binary to use.  If this guess is incorrect, then those
+translations will be misleading.

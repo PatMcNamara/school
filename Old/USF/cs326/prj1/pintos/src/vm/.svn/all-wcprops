@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/pjmcnamara2/!svn/ver/107/cs326/prj1/pintos/src/vm
+END
+Make.vars
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/pjmcnamara2/!svn/ver/107/cs326/prj1/pintos/src/vm/Make.vars
+END
+.cvsignore
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/pjmcnamara2/!svn/ver/107/cs326/prj1/pintos/src/vm/.cvsignore
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/pjmcnamara2/!svn/ver/107/cs326/prj1/pintos/src/vm/Makefile
+END

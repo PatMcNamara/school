@@ -1,0 +1,50 @@
+8
+
+dir
+87
+https://www.cs.usfca.edu/svn/pjmcnamara2/cs210/inclass/exponent
+https://www.cs.usfca.edu/svn/pjmcnamara2
+
+
+
+2008-02-25T06:24:28.947794Z
+5
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+12f3d7e9-a5b0-4746-bf85-ad75b41ecfd1
+
+exponent.cpp
+file
+
+
+
+
+2008-09-02T21:45:07.000000Z
+0abb531a81c8f1db72f9a1376a72ad43
+2008-02-25T06:24:28.947794Z
+5
+
+expo.s
+file
+
+
+
+
+2008-09-02T21:45:07.000000Z
+5316eb0b8bd7aa51bbaa5a3f510064bd
+2008-02-25T06:24:28.947794Z
+5
+

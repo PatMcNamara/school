@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/nommo/!svn/ver/41/tags/prj2/misc
+END
+bochs-2.2.6-page-fault-segv.patch
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/nommo/!svn/ver/41/tags/prj2/misc/bochs-2.2.6-page-fault-segv.patch
+END
+bochs-2.2.6-solaris-link.patch
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/nommo/!svn/ver/41/tags/prj2/misc/bochs-2.2.6-solaris-link.patch
+END
+bochs-2.2.6-triple-fault.patch
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/nommo/!svn/ver/41/tags/prj2/misc/bochs-2.2.6-triple-fault.patch
+END
+gcc-3.3.6-cross-howto
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/nommo/!svn/ver/41/tags/prj2/misc/gcc-3.3.6-cross-howto
+END
+bochs-2.2.6-build.sh
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/nommo/!svn/ver/41/tags/prj2/misc/bochs-2.2.6-build.sh
+END
+bochs-2.2.6-paranoia.patch
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/nommo/!svn/ver/41/tags/prj2/misc/bochs-2.2.6-paranoia.patch
+END
+bochs-2.2.6-solaris-tty.patch
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/nommo/!svn/ver/41/tags/prj2/misc/bochs-2.2.6-solaris-tty.patch
+END
+bochs-2.2.6-ms-extensions.patch
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/nommo/!svn/ver/41/tags/prj2/misc/bochs-2.2.6-ms-extensions.patch
+END
+bochs-2.2.6-big-endian.patch
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/nommo/!svn/ver/41/tags/prj2/misc/bochs-2.2.6-big-endian.patch
+END
+bochs-2.2.6-jitter.patch
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/nommo/!svn/ver/41/tags/prj2/misc/bochs-2.2.6-jitter.patch
+END
+gdb-macros
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/41/tags/prj2/misc/gdb-macros
+END

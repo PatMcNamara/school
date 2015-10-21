@@ -1,0 +1,58 @@
+8
+
+dir
+87
+https://www.cs.usfca.edu/svn/pjmcnamara2/cs210/exam
+https://www.cs.usfca.edu/svn/pjmcnamara2
+
+
+
+2008-02-25T06:24:28.947794Z
+5
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+12f3d7e9-a5b0-4746-bf85-ad75b41ecfd1
+
+tomorrow
+dir
+
+final
+dir
+
+iseven
+file
+
+
+
+
+2008-09-02T21:45:07.000000Z
+50c8f1a34b7cb0308ed191b1be65b908
+2008-02-25T06:24:28.947794Z
+5
+
+has-props
+
+iseven.s
+file
+
+
+
+
+2008-09-02T21:45:07.000000Z
+02fa1d266dd791340c776557320a2dfd
+2008-02-25T06:24:28.947794Z
+5
+

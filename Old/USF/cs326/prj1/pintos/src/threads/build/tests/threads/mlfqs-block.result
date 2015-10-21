@@ -1,0 +1,9 @@
+FAIL
+Kernel panic in run: PANIC at ../../tests/threads/tests.c:60 in run_test(): no test named "mlfqs-block"
+Call stack: 0xc01075dc 0xc010968d 0xc0100535 0xc0100601 0xc0100094
+Translation of call stack:
+0xc01075dc: debug_panic (.../../lib/kernel/debug.c:34)
+0xc010968d: run_test (.../tests/threads/tests.c:54)
+0xc0100535: run_task (.../../../threads/init.c:270)
+0xc0100601: run_actions (.../../../threads/init.c:319)
+0xc0100094: main (.../../../threads/init.c:124)

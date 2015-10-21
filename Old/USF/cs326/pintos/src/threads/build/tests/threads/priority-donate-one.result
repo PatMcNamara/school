@@ -1,0 +1,11 @@
+FAIL
+Kernel panic in run: PANIC at ../../threads/interrupt.c:373 in intr_handler(): Unexpected interrupt
+Call stack: 0xc010700c 0xc0101659 0xc010174f 0xc0116002 0xc0105e37 0xc01000b7 0xc010064f
+Translation of call stack:
+0xc010700c: debug_panic (.../../lib/kernel/debug.c:34)
+0xc0101659: intr_handler (..../threads/interrupt.c:377)
+0xc010174f: intr_entry (threads/intr-stubs.S:38)
+0xc0116002: (unknown)
+0xc0105e37: printf (...uild/../../lib/stdio.c:89)
+0xc01000b7: run_task (.../../../threads/init.c:271)
+0xc010064f: run_actions (.../../../threads/init.c:319)

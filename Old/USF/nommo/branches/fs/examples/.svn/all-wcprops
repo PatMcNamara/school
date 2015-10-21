@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/nommo/!svn/ver/52/branches/fs/examples
+END
+cp.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/52/branches/fs/examples/cp.c
+END
+recursor.c
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/nommo/!svn/ver/52/branches/fs/examples/recursor.c
+END
+mkdir.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/nommo/!svn/ver/52/branches/fs/examples/mkdir.c
+END
+shell.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/nommo/!svn/ver/52/branches/fs/examples/shell.c
+END
+cat.c
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/nommo/!svn/ver/52/branches/fs/examples/cat.c
+END
+rm.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/52/branches/fs/examples/rm.c
+END
+echo.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/52/branches/fs/examples/echo.c
+END
+insult.c
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/nommo/!svn/ver/52/branches/fs/examples/insult.c
+END
+ls.c
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/52/branches/fs/examples/ls.c
+END
+cmp.c
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/nommo/!svn/ver/52/branches/fs/examples/cmp.c
+END
+mcp.c
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/nommo/!svn/ver/52/branches/fs/examples/mcp.c
+END
+bubsort.c
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/nommo/!svn/ver/52/branches/fs/examples/bubsort.c
+END
+matmult.c
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/nommo/!svn/ver/52/branches/fs/examples/matmult.c
+END
+mcat.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/52/branches/fs/examples/mcat.c
+END
+hex-dump.c
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/nommo/!svn/ver/52/branches/fs/examples/hex-dump.c
+END
+halt.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/52/branches/fs/examples/halt.c
+END
+pwd.c
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/nommo/!svn/ver/52/branches/fs/examples/pwd.c
+END
+lineup.c
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/nommo/!svn/ver/52/branches/fs/examples/lineup.c
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/nommo/!svn/ver/52/branches/fs/examples/Makefile
+END
+.cvsignore
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/nommo/!svn/ver/52/branches/fs/examples/.cvsignore
+END

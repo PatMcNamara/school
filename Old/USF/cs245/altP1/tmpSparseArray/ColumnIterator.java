@@ -1,0 +1,11 @@
+package tmpSparseArray;
+
+abstract class ColumnIterator implements java.util.Iterator<ElemIterator>  
+{	
+    public abstract ElemIterator next();
+    public abstract boolean hasNext();
+    public void remove()
+    {
+        throw new UnsupportedOperationException();
+    }
+}

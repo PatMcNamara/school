@@ -1,0 +1,134 @@
+/* Patrick McNamara */
+/* cs4410 HW 1 */
+/* 10/01/2015 */
+
+#include<time.h>
+#define _USE_MATH_DEFINES
+#include<math.h>
+#include<iostream>
+using namespace std;
+
+#include <windows.h>
+#include<gl/GL.h>
+#include<gl/GLU.h>
+#include<gl/glut.h>
+
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = SCREEN_WIDTH;
+const int SCREEN_MAX_RIGHT = SCREEN_WIDTH / 2;
+const int SCREEN_MAX_LEFT = -SCREEN_WIDTH / 2;
+const int SCREEN_MAX_TOP = SCREEN_HEIGHT / 2;
+const int SCREEN_MAX_BOTTOM = -SCREEN_HEIGHT / 2;
+
+const int NUM_HEX = 30; // Number of hexagons to draw.
+const int MIN_HEX_SIZE = 20; //The size of the smallest hexagon
+
+const float ZOOM_FACTOR = 1; // The higher this is, the fatster it zooms.
+
+struct GLintPoint {
+	GLint x, y;
+};
+
+// Init the openGL system.
+void init() {
+	glClearColor(1.0, 1.0, 1.0, 1.0);
+	glColor3f(0.0f, 0.0f, 0.0f);
+	glLineWidth(1.0);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(SCREEN_MAX_LEFT, SCREEN_MAX_RIGHT, SCREEN_MAX_BOTTOM, SCREEN_MAX_TOP);
+}
+
+// Draws a hexagon that has a side length of size
+void drawHexagon(int size) {
+	glPushMatrix();
+	for (int i = 0; i < 6; i++) {
+		glBegin(GL_LINES);
+		glVertex2i(-size*cos(60*M_PI/180), size*sin(60*M_PI/180));
+		glVertex2i( size*cos(60*M_PI/180), size*sin(60*M_PI/180));
+		glEnd();
+
+		glRotated(60.0, 0, 0, 1);
+	}
+	glPopMatrix();
+}
+
+void drawSwirl() {
+	glPushMatrix();
+	int hexSizeDiff = ((SCREEN_WIDTH / 2) - (MIN_HEX_SIZE / 2)) / NUM_HEX;
+	for (int i = 0; i < NUM_HEX; i++) {
+		drawHexagon(MIN_HEX_SIZE + (i * hexSizeDiff));
+		glRotated(-5.0, 0, 0, 1);
+	}
+	glFlush();
+	glutPostRedisplay();
+	glPopMatrix();
+}
+
+void setWindow(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top) {
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(left, right, bottom, top);
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void draw() {
+	glClear(GL_COLOR_BUFFER_BIT);
+	//drawSwirl();
+	float left = SCREEN_MAX_LEFT, right = SCREEN_MAX_RIGHT, top = SCREEN_MAX_TOP, bottom = SCREEN_MAX_BOTTOM;
+
+	/*left = bottom = 0;
+	right = top = 1;
+	glViewport(-100, -100, SCREEN_WIDTH +200, SCREEN_HEIGHT + 200);
+	glFlush();
+	drawSwirl();*/
+	
+	
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
+	while (true) {
+		// zoom in until your boundery reaches the smallest hex
+		while (left < - MIN_HEX_SIZE) {
+			glClear(GL_COLOR_BUFFER_BIT);
+			setWindow(left, right, bottom, top);
+			left += ZOOM_FACTOR;
+			right -= ZOOM_FACTOR;
+			bottom += ZOOM_FACTOR;
+			top -= ZOOM_FACTOR;
+			//glutPostRedisplay();
+			drawSwirl();
+			glutSwapBuffers();
+		}
+		while (left > SCREEN_MAX_LEFT) {
+			glClear(GL_COLOR_BUFFER_BIT);
+			setWindow(left, right, bottom, top);
+			left -= ZOOM_FACTOR;
+			right += ZOOM_FACTOR;
+			bottom -= ZOOM_FACTOR;
+			top += ZOOM_FACTOR;
+			//glutPostRedisplay();
+			drawSwirl();
+			glutSwapBuffers();
+		}
+	}
+}
+
+void keypress(unsigned char key, int x, int y) {
+	if (key == 'q') {
+		exit(0);
+	}
+}
+
+int main(int argc, char **argv) {
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+	glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	glutInitWindowPosition(100, 150);
+	glutCreateWindow("Whirling Hexagons");
+	//glutDisplayFunc(draw);
+	glutKeyboardFunc(keypress);
+	glutIdleFunc(draw);
+	init();
+	glutMainLoop();
+}
+

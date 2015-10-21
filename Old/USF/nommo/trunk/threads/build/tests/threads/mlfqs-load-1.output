@@ -1,0 +1,22 @@
+Writing command line to /tmp/EkwVN33WsT.dsk...
+qemu -hda /tmp/EkwVN33WsT.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -mlfqs run mlfqs-load-1
+Pintos booting with 4,096 kB RAM...
+375 pages available in kernel pool.
+374 pages available in user pool.
+Calibrating timer...  104,755,200 loops/s.
+Boot complete.
+Executing 'mlfqs-load-1':
+(mlfqs-load-1) begin
+(mlfqs-load-1) spinning for up to 45 seconds, please wait...
+(mlfqs-load-1) FAIL: load average stayed below 0.5 for more than 45 seconds
+Kernel PANIC at ../../tests/threads/tests.c:93 in fail(): test failed
+Call stack: 0xc010710c 0xc010901b 0xc010ae33 0xc010905b 0xc01000a7 0xc010064f.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 4621 ticks
+Thread: 0 idle ticks, 4621 kernel ticks, 0 user ticks
+Console: 771 characters output
+Keyboard: 0 keys pressed
+Powering off...

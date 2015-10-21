@@ -1,0 +1,269 @@
+#include "userprog/syscall.h"
+#include <stdio.h>
+#include <stdint.h>
+#include <syscall-nr.h>
+#include "threads/interrupt.h"
+#include "threads/thread.h"
+#include "threads/init.h"
+#include "threads/synch.h"
+#include "threads/vaddr.h"
+#include "threads/malloc.h"
+#include "userprog/process.h"
+#include "userprog/pagedir.h"
+#include "filesys/filesys.h"
+#include "filesys/file.h"
+
+static void syscall_handler (struct intr_frame *);
+void *next_arg(void);
+char *next_str(void);
+void validate_byte(void *);
+void validate_word(void *);
+void validate_str(char *);
+tid_t exec(void);
+void validate_buffer(void *ptr, unsigned size);
+
+void *offset;
+
+void
+syscall_init (void)
+{
+  intr_register_int (0x30, 3, INTR_ON, syscall_handler, "syscall");
+  lock_init(&fs_lock);
+}
+
+static void
+syscall_handler (struct intr_frame *f)
+{
+  uint32_t ret_val;
+
+  offset = f->esp;
+  int sys_call = (int) next_arg();
+
+  char *tmp; //TODO remove
+
+  switch (sys_call) {
+  case SYS_HALT:
+    power_off();
+    NOT_REACHED ();
+
+  case SYS_EXIT:
+    thread_current()->exit_controler->value = (int) next_arg();
+    thread_exit();
+    NOT_REACHED ();
+
+  case SYS_EXEC:
+    ret_val = exec();
+    break;
+
+  case SYS_WAIT:
+    ret_val = process_wait((tid_t) next_arg());
+    break;
+
+  case SYS_CREATE:
+    tmp = next_str();
+    ret_val = filesys_create(tmp, next_arg());
+    break;
+
+  case SYS_REMOVE:
+    ret_val = filesys_remove(next_str());
+    break;
+
+  case SYS_OPEN:
+    ret_val = syscall_open(next_str());
+    break;
+
+  case SYS_FILESIZE:
+    lock_acquire(&fs_lock);
+    ret_val = file_length(thread_current()->open_files[(int) next_arg()]->file);
+    lock_release(&fs_lock);
+    break;
+
+  case SYS_READ:
+    ret_val = syscall_read();
+    break;
+
+  case SYS_WRITE:
+    ret_val = syscall_write();
+    break;
+
+  case SYS_SEEK:
+    syscall_seek();
+    break;
+
+  case SYS_TELL:
+    lock_acquire(&fs_lock);
+    ret_val = file_tell(thread_current()->open_files[(int) next_arg()]->file);
+    lock_release(&fs_lock);
+    break;
+
+  case SYS_CLOSE:
+    syscall_close(next_arg());
+    break;
+
+  default:
+    //TODO print error message
+    break;
+  }
+  f->eax = ret_val;
+}
+
+void *next_arg() {//TODO instead of using void *, should use something from stdint
+  validate_word(offset);
+  void *ret_val = *(unsigned int *) offset;
+  offset += sizeof(void *);
+  return ret_val;
+}
+
+char *next_str() {
+  char *s = next_arg();
+  validate_str(s);
+  return s;
+}
+
+void validate_byte(void *ptr) {
+  if(!is_user_vaddr(ptr) || pagedir_get_page(thread_current()->pagedir, ptr) == NULL)
+    thread_exit();
+}
+
+void validate_range(void *start, void *end) {
+  for(; start <= end; start++) {
+    validate_byte(start);
+  }
+}
+
+void validate_buffer(void *ptr, unsigned size) {
+  validate_range(ptr, ptr + size);
+}
+
+/* used for validating pointers and ints */
+void validate_word(void *ptr) {
+  validate_range(ptr, ptr + sizeof(void *));
+}
+
+void validate_str(char *str) {
+  do {
+    validate_byte(str);
+  } while (*str++ != NULL);
+}
+
+tid_t exec(void) {
+  char *args = next_str();
+  tid_t tid = process_execute(args);
+
+  if(tid != TID_ERROR){
+    struct list_elem *e;
+    struct exit_struct *exit = NULL;
+    // TODO this is used at least 3 times
+    for(e = list_begin(&thread_current()->children); e != list_end(&thread_current()->children); e = list_next(e)) {
+      if(tid == list_entry(e, struct exit_struct, elem)->tid){
+        exit = list_entry(e, struct exit_struct, elem);
+        break;
+      }
+    }
+    sema_down(&exit->running);
+    if(!exit->loaded) {
+      /*list_remove(&exit->elem);
+      free(exit);
+      tid = -1;*/
+      /* This will always return -1 */
+      tid = process_wait(tid);
+    }
+  }
+  return tid;
+}
+
+int syscall_read(void)
+{
+	int ret_val,
+	    fd = (int) next_arg();
+	void *buf = next_arg();
+	unsigned size = (unsigned) next_arg();
+	validate_buffer(buf, size);
+	  
+   //Read from stdin
+   if(fd == STDIN_FILENO)
+   {
+     char *c = buf;
+     while(c < buf + size){
+       *c++ = input_getc();
+     }
+     ret_val = size;
+   }
+   
+   //Perform operation onbly if the given fd is in the calling threads
+   //open fd list 
+   else if(fd >= 2 && fd < 128 && thread_current()->open_files[fd] != NULL)
+   {
+     lock_acquire(&fs_lock);
+     ret_val = file_read(thread_current()->open_files[fd]->file, buf, size);
+     lock_release(&fs_lock);
+   } else {
+     ret_val = -1;
+   }
+   return ret_val;
+}
+
+int syscall_write(void){
+    int ret_val,
+        fd = (int) next_arg();
+   void *buf = next_arg();
+   unsigned size = (unsigned) next_arg();
+   validate_buffer(buf, size);
+	
+   //write to stdout
+   if (fd == STDOUT_FILENO){
+     putbuf(buf, size);
+     ret_val = size;
+      
+   } else if (fd >= 2 && fd < 128 && thread_current()->open_files[fd] != NULL){
+     lock_acquire(&fs_lock);
+     ret_val = file_write(thread_current()->open_files[fd]->file, buf, size);
+     lock_release(&fs_lock);
+   } else {
+     ret_val = -1;
+   }
+   return ret_val;
+}
+
+void syscall_close(int fd) {
+  if(fd < 2 || fd >= 128)
+    return;
+
+  struct fd_elem *fde = thread_current()->open_files[fd];
+  if(fde != NULL) {
+    lock_acquire(&fs_lock);
+    file_close(fde->file);
+    lock_release(&fs_lock);
+    free(fde);
+    thread_current()->open_files[fd] = NULL;
+  }
+}
+
+int syscall_open(const char *file_name){
+  lock_acquire(&fs_lock);
+  struct file *f = filesys_open(file_name);
+  lock_release(&fs_lock);
+
+  if(f == NULL)
+    return -1;
+
+  struct file **fdt = thread_current()->open_files;
+  int fd;
+  for(fd = 2; fdt[fd] != NULL; fd++);
+  
+   struct fd_elem *fd_elem = malloc(sizeof(struct fd_elem));
+   fd_elem->fd=fd;
+   fd_elem->file = f;
+   fdt[fd] = fd_elem;
+   
+  return fd;
+}
+
+void syscall_seek() {
+  int fd = next_arg();
+  unsigned position = next_arg();
+
+  lock_acquire(&fs_lock);
+  file_seek(thread_current()->open_files[fd]->file, position);
+  lock_release(&fs_lock);
+}

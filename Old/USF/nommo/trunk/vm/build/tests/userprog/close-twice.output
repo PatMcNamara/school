@@ -1,0 +1,35 @@
+Copying tests/userprog/close-twice into /tmp/ZJw4r1e6Zt.dsk...
+Copying ../../tests/userprog/sample.txt into /tmp/ZJw4r1e6Zt.dsk...
+Writing command line to /tmp/b9b4Pw6r62.dsk...
+qemu -hda /tmp/b9b4Pw6r62.dsk -hdb /tmp/95bXMUVGJo.dsk -hdc /tmp/ZJw4r1e6Zt.dsk -hdd /tmp/8DH3MBtbw4.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -f put close-twice put sample.txt run close-twice
+Pintos booting with 4,096 kB RAM...
+372 pages available in kernel pool.
+371 pages available in user pool.
+Calibrating timer...  37,580,800 loops/s.
+hd0:0: detected 177 sector (88 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 123 sector (61 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
+Formatting file system...done.
+Boot complete.
+Putting 'close-twice' into the file system...
+Putting 'sample.txt' into the file system...
+Executing 'close-twice':
+(close-twice) begin
+(close-twice) open "sample.txt"
+(close-twice) close "sample.txt"
+(close-twice) close "sample.txt" again
+(close-twice) end
+close-twice: exit(0)
+Execution of 'close-twice' complete.
+Timer: 57 ticks
+Thread: 30 idle ticks, 26 kernel ticks, 2 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 95 reads, 256 writes
+hd1:0: 123 reads, 0 writes
+hd1:1: 0 reads, 16 writes
+Console: 1085 characters output
+Keyboard: 0 keys pressed
+Exception: 6 page faults
+Powering off...

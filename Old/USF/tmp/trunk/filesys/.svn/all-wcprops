@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/nommo/!svn/ver/5/trunk/filesys
+END
+inode.c
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/nommo/!svn/ver/5/trunk/filesys/inode.c
+END
+free-map.h
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/nommo/!svn/ver/5/trunk/filesys/free-map.h
+END
+off_t.h
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/nommo/!svn/ver/5/trunk/filesys/off_t.h
+END
+inode.h
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/nommo/!svn/ver/5/trunk/filesys/inode.h
+END
+directory.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/5/trunk/filesys/directory.c
+END
+Make.vars
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/nommo/!svn/ver/5/trunk/filesys/Make.vars
+END
+fsutil.c
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/nommo/!svn/ver/5/trunk/filesys/fsutil.c
+END
+directory.h
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/5/trunk/filesys/directory.h
+END
+fsutil.h
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/nommo/!svn/ver/5/trunk/filesys/fsutil.h
+END
+filesys.c
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/nommo/!svn/ver/5/trunk/filesys/filesys.c
+END
+file.c
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/nommo/!svn/ver/5/trunk/filesys/file.c
+END
+filesys.h
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/nommo/!svn/ver/5/trunk/filesys/filesys.h
+END
+file.h
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/nommo/!svn/ver/5/trunk/filesys/file.h
+END
+.cvsignore
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/nommo/!svn/ver/5/trunk/filesys/.cvsignore
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/nommo/!svn/ver/5/trunk/filesys/Makefile
+END
+free-map.c
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/nommo/!svn/ver/5/trunk/filesys/free-map.c
+END

@@ -1,0 +1,29 @@
+Copying tests/userprog/bad-write into /tmp/oqWFtr8qmG.dsk...
+Writing command line to /tmp/xF7WheS0D6.dsk...
+qemu -hda /tmp/xF7WheS0D6.dsk -hdb /tmp/E1VKqqwv98.dsk -hdc /tmp/oqWFtr8qmG.dsk -hdd /tmp/ALD7uCmbY3.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -f put bad-write run bad-write
+Pintos booting with 4,096 kB RAM...
+372 pages available in kernel pool.
+371 pages available in user pool.
+Calibrating timer...  24,448,000 loops/s.
+hd0:0: detected 177 sector (88 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 120 sector (60 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
+Formatting file system...done.
+Boot complete.
+Putting 'bad-write' into the file system...
+Executing 'bad-write':
+(bad-write) begin
+bad-write: exit(-1)
+Execution of 'bad-write' complete.
+Timer: 57 ticks
+Thread: 30 idle ticks, 25 kernel ticks, 3 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 64 reads, 248 writes
+hd1:0: 120 reads, 0 writes
+hd1:1: 0 reads, 16 writes
+Console: 890 characters output
+Keyboard: 0 keys pressed
+Exception: 7 page faults
+Powering off...

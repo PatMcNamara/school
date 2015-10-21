@@ -1,0 +1,72 @@
+8
+
+dir
+87
+https://www.cs.usfca.edu/svn/pjmcnamara2/cs110/projects/gradecalculator
+https://www.cs.usfca.edu/svn/pjmcnamara2
+
+
+
+2008-02-25T06:24:28.947794Z
+5
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+12f3d7e9-a5b0-4746-bf85-ad75b41ecfd1
+
+calcsimple.py
+file
+
+
+
+
+2008-09-02T21:45:07.000000Z
+52db4fc1f85ff67ca6454e6bd44d8944
+2008-02-25T06:24:28.947794Z
+5
+
+grades.txt
+file
+
+
+
+
+2008-09-02T21:45:07.000000Z
+39c8c0c7be94901db90d38595f5f6679
+2008-02-25T06:24:28.947794Z
+5
+
+calc.py
+file
+
+
+
+
+2008-09-02T21:45:07.000000Z
+4f1573bfa8f4595f49ac405e2814f38b
+2008-02-25T06:24:28.947794Z
+5
+
+gradebook.txt
+file
+
+
+
+
+2008-09-02T21:45:07.000000Z
+76075c5cde7dea3a40368b27952b4b86
+2008-02-25T06:24:28.947794Z
+5
+

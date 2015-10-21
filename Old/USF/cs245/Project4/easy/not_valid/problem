@@ -1,0 +1,2 @@
+enormous.2 has an extra space on the end of the last line that causes a parsing error.
+no.move.2 should not be able to move a block but when Solver returns 'no solution,' the Test.jar says it is the wrong solution.

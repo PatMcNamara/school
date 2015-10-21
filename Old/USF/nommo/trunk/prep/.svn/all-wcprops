@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/nommo/!svn/ver/50/trunk/prep
+END
+memalloc.h
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/nommo/!svn/ver/50/trunk/prep/memalloc.h
+END
+listtest.c
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/nommo/!svn/ver/50/trunk/prep/listtest.c
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/nommo/!svn/ver/50/trunk/prep/Makefile
+END
+test_mem.c
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/nommo/!svn/ver/50/trunk/prep/test_mem.c
+END

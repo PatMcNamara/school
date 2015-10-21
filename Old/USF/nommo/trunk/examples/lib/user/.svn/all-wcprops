@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/nommo/!svn/ver/50/trunk/examples/lib/user
+END
+.dummy
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/nommo/!svn/ver/50/trunk/examples/lib/user/.dummy
+END
+.cvsignore
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/nommo/!svn/ver/50/trunk/examples/lib/user/.cvsignore
+END

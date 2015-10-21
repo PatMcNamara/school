@@ -1,0 +1,33 @@
+
+This is an experimental version of a remote debugging tool
+for Linux assembly language programs.
+
+First, you need to 'compile' the kernel module (dbmodule.c)
+against your current Linux (version 2.6.10) source-tree.  
+Asuming your tree exists, you can do this by typing:
+
+	$ make
+
+Next you need to launch the 'dbserver' application from the
+same directory as your executable application program:
+
+	$ dbserver
+
+Finally, you need to launch the 'dbserver' application from
+another window, terminal, or workstation on the same local
+area network:
+
+	$ dbclient myapp <arguments>
+
+or
+	$ dbclient [hostname:]myapp <arguments>
+
+
+Press <SPACE> to single-step.  Press 'H' or '?' to see
+additional command-options that have been implemented.
+
+Report 'bugs' to:  cruse@usfca.edu
+
+ALLAN CRUSE
+29 Mar 2005
+

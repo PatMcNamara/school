@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/nommo/!svn/ver/50/trunk/lib/user
+END
+user.lds
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/nommo/!svn/ver/50/trunk/lib/user/user.lds
+END
+syscall.h
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/50/trunk/lib/user/syscall.h
+END
+entry.c
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/nommo/!svn/ver/50/trunk/lib/user/entry.c
+END
+console.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/50/trunk/lib/user/console.c
+END
+debug.c
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/nommo/!svn/ver/50/trunk/lib/user/debug.c
+END
+stdio.h
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/nommo/!svn/ver/50/trunk/lib/user/stdio.h
+END
+syscall.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/50/trunk/lib/user/syscall.c
+END

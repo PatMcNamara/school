@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/nommo/!svn/ver/5/trunk/examples
+END
+cp.c
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/nommo/!svn/ver/5/trunk/examples/cp.c
+END
+recursor.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/5/trunk/examples/recursor.c
+END
+mkdir.c
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/nommo/!svn/ver/5/trunk/examples/mkdir.c
+END
+shell.c
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/nommo/!svn/ver/5/trunk/examples/shell.c
+END
+cat.c
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/nommo/!svn/ver/5/trunk/examples/cat.c
+END
+rm.c
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/nommo/!svn/ver/5/trunk/examples/rm.c
+END
+echo.c
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/nommo/!svn/ver/5/trunk/examples/echo.c
+END
+insult.c
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/nommo/!svn/ver/5/trunk/examples/insult.c
+END
+ls.c
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/nommo/!svn/ver/5/trunk/examples/ls.c
+END
+cmp.c
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/nommo/!svn/ver/5/trunk/examples/cmp.c
+END
+mcp.c
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/nommo/!svn/ver/5/trunk/examples/mcp.c
+END
+bubsort.c
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/nommo/!svn/ver/5/trunk/examples/bubsort.c
+END
+matmult.c
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/nommo/!svn/ver/5/trunk/examples/matmult.c
+END
+mcat.c
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/nommo/!svn/ver/5/trunk/examples/mcat.c
+END
+hex-dump.c
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/5/trunk/examples/hex-dump.c
+END
+halt.c
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/nommo/!svn/ver/5/trunk/examples/halt.c
+END
+pwd.c
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/nommo/!svn/ver/5/trunk/examples/pwd.c
+END
+lineup.c
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/nommo/!svn/ver/5/trunk/examples/lineup.c
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/nommo/!svn/ver/5/trunk/examples/Makefile
+END
+.cvsignore
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/nommo/!svn/ver/5/trunk/examples/.cvsignore
+END

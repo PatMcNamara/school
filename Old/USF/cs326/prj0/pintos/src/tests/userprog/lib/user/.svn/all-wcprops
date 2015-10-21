@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/pjmcnamara2/!svn/ver/99/cs326/prj0/pintos/src/tests/userprog/lib/user
+END
+.dummy
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/pjmcnamara2/!svn/ver/99/cs326/prj0/pintos/src/tests/userprog/lib/user/.dummy
+END
+.cvsignore
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/pjmcnamara2/!svn/ver/99/cs326/prj0/pintos/src/tests/userprog/lib/user/.cvsignore
+END

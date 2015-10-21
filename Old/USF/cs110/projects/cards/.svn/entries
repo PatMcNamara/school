@@ -1,0 +1,72 @@
+8
+
+dir
+87
+https://www.cs.usfca.edu/svn/pjmcnamara2/cs110/projects/cards
+https://www.cs.usfca.edu/svn/pjmcnamara2
+
+
+
+2008-02-25T06:24:28.947794Z
+5
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+12f3d7e9-a5b0-4746-bf85-ad75b41ecfd1
+
+cards.py
+file
+
+
+
+
+2008-09-02T21:45:06.000000Z
+e4ba5e162eb07d99df9284467c6bd47c
+2008-02-25T06:24:28.947794Z
+5
+
+cardsrandom.py
+file
+
+
+
+
+2008-09-02T21:45:07.000000Z
+f2d92bcf3347d8d3f03ec8018969a89b
+2008-02-25T06:24:28.947794Z
+5
+
+cards2players.py
+file
+
+
+
+
+2008-09-02T21:45:07.000000Z
+c35eb305829a5ddc2d1a7c3cfa8e75c3
+2008-02-25T06:24:28.947794Z
+5
+
+cards2playerscomplicated.py
+file
+
+
+
+
+2008-09-02T21:45:07.000000Z
+5b91560bddc18f75a2f77b0cb7f2c9d9
+2008-02-25T06:24:28.947794Z
+5
+

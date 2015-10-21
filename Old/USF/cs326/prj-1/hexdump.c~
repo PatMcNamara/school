@@ -1,0 +1,48 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<fcntl.h>
+#include<unistd.h>
+
+int main(int argc, char *argv[]){
+	char buffer[18];
+	int fd;
+	int count, i, total=0;
+	
+	// check args
+	if (argc != 2) {
+		printf("usage: hexdump filename\n");
+		exit(1);
+	}
+	if((fd = open(argv[1], O_RDONLY)) < 0){
+		printf("can't open file %s\n", argv[1]);
+		exit(1);
+	}
+	
+	// read in 16 bytes into buffer
+	while ((count = read(fd, buffer, 16)) > 0) {
+		// display total number of bytes
+		printf("%8x  ", total);
+		total += count;
+		
+		// display byte values
+		for(i=0; i < count; i++){
+			if(i==8) { printf(" "); }
+			printf("%2x ", buffer[i]);
+			if(!isprint(buffer[i])) { buffer[i] = '.'; }
+		}
+		
+		// if buffer is empty, fill line
+		if(i<=8) { printf(" "); }
+		for(;i < 16; i++){
+			printf("   ");
+			buffer[i] = '\0';
+		}
+		// print ascii version of buffer
+		printf(" |%s|\n", buffer);
+	}
+	// print final count
+	printf("%8x  \n", total);
+	
+	close(fd);
+	return(0);
+}

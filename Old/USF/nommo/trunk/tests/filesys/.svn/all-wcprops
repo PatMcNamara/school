@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/nommo/!svn/ver/50/trunk/tests/filesys
+END
+Grading.with-vm
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/nommo/!svn/ver/50/trunk/tests/filesys/Grading.with-vm
+END
+Grading.no-vm
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/nommo/!svn/ver/50/trunk/tests/filesys/Grading.no-vm
+END
+seq-test.c
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/nommo/!svn/ver/50/trunk/tests/filesys/seq-test.c
+END
+create.inc
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/nommo/!svn/ver/50/trunk/tests/filesys/create.inc
+END
+seq-test.h
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/nommo/!svn/ver/50/trunk/tests/filesys/seq-test.h
+END

@@ -1,0 +1,29 @@
+Copying tests/userprog/sc-bad-sp into /tmp/PVaVmbSV2S.dsk...
+Writing command line to /tmp/A4cTdfUWiZ.dsk...
+qemu -hda /tmp/A4cTdfUWiZ.dsk -hdb /tmp/UOEVhQNueZ.dsk -hdc /tmp/PVaVmbSV2S.dsk -hdd /tmp/Pq9rYnFvLL.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q -f put sc-bad-sp run sc-bad-sp
+Pintos booting with 4,096 kB RAM...
+372 pages available in kernel pool.
+371 pages available in user pool.
+Calibrating timer...  48,486,400 loops/s.
+hd0:0: detected 177 sector (88 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 4,032 sector (1 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 120 sector (60 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+hd1:1: detected 8,064 sector (3 MB) disk, model "QEMU HARDDISK", serial "QM00004"
+Formatting file system...done.
+Boot complete.
+Putting 'sc-bad-sp' into the file system...
+Executing 'sc-bad-sp':
+(sc-bad-sp) begin
+sc-bad-sp: exit(-1)
+Execution of 'sc-bad-sp' complete.
+Timer: 56 ticks
+Thread: 30 idle ticks, 25 kernel ticks, 1 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 64 reads, 248 writes
+hd1:0: 120 reads, 0 writes
+hd1:1: 0 reads, 16 writes
+Console: 890 characters output
+Keyboard: 0 keys pressed
+Exception: 6 page faults
+Powering off...

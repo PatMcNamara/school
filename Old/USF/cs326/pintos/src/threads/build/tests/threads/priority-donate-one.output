@@ -1,0 +1,31 @@
+Writing command line to /tmp/lyeMon7lqA.dsk...
+qemu -hda /tmp/lyeMon7lqA.dsk -m 4 -net none -nographic -monitor null
+Kernel command line: -q run priority-donate-one
+Pintos booting with 4,096 kB RAM...
+375 pages available in kernel pool.
+374 pages available in user pool.
+Calibrating timer...  104,652,800 loops/s.
+Boot complete.
+Executing 'priority-donate-one':
+(priority-donate-one) begin
+(priority-donate-one) This thread should have priority 32.  Actual priority: 31.
+(priority-donate-one) This thread should have priority 33.  Actual priority: 31.
+(priority-donate-one) acquire2, acquire1 must already have finished, in that order.
+(priority-donate-one) This should be the last line before finishing this test.
+(priority-donate-one) end
+Execution of 'priority-donate-one' complete.
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc0116002
+ cr2=00000000 error=00000000
+ eax=00000000 ebx=c0007d85 ecx=0000070e edx=000003d4
+ esi=c0007d81 edi=c010cd05 esp=c010c51a ebp=c002ff48
+ cs=0008 ds=0010 es=0010 ss=ff74
+Kernel PANIC at ../../threads/interrupt.c:373 in intr_handler(): Unexpected interrupt
+Call stack: 0xc010700c 0xc0101659 0xc010174f 0xc0116002 0xc0105e37 0xc01000b7 0xc010064f.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 24 ticks
+Thread: 0 idle ticks, 24 kernel ticks, 0 user ticks
+Console: 1295 characters output
+Keyboard: 0 keys pressed
+Powering off...

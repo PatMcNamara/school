@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/nommo/!svn/ver/58/branches/print/lib/kernel
+END
+list.h
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/nommo/!svn/ver/58/branches/print/lib/kernel/list.h
+END
+bitmap.h
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/nommo/!svn/ver/58/branches/print/lib/kernel/bitmap.h
+END
+console.c
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/nommo/!svn/ver/58/branches/print/lib/kernel/console.c
+END
+hash.c
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/nommo/!svn/ver/58/branches/print/lib/kernel/hash.c
+END
+debug.c
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/nommo/!svn/ver/58/branches/print/lib/kernel/debug.c
+END
+console.h
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/nommo/!svn/ver/58/branches/print/lib/kernel/console.h
+END
+stdio.h
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/nommo/!svn/ver/58/branches/print/lib/kernel/stdio.h
+END
+hash.h
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/nommo/!svn/ver/58/branches/print/lib/kernel/hash.h
+END
+list.c
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/nommo/!svn/ver/58/branches/print/lib/kernel/list.c
+END
+bitmap.c
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/nommo/!svn/ver/58/branches/print/lib/kernel/bitmap.c
+END

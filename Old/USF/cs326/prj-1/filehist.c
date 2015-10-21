@@ -1,0 +1,31 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<fcntl.h>
+
+int main(int argc, char *argv[]){
+	char buffer[2];
+	int i, fd, occurrences[128];
+	
+	if (argc != 2) {
+		printf("usage: filehist filename\n");
+		exit(1);
+	}
+	if((fd = open(argv[1], O_RDONLY)) < 0){
+		printf("can't open file %s\n", argv[1]);
+		exit(1);
+	}
+	
+	for(i=0;i<128;i++)
+		occurrences[i]=0;
+	
+	while(read(fd, buffer, 1) > 0)
+		occurrences[buffer[0]]++;
+	
+	close(fd);
+	
+	for(i=0; i < 128; i++){
+		if(occurrences[i] > 0)
+			printf("%.2x %d\n", i, occurrences[i]);
+	}
+	return(0);
+}

@@ -1,0 +1,2 @@
+Name:Bob proj1:80 proj2:76 proj3:67 proj4:99 exam1:70 exam2:80 exam3:88 part:78
+Name:Tim proj1:100 proj2:100 proj3:100 proj4:100 exam1:100 exam2:100 exam3:100 part:100

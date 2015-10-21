@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 28
+/svn/nommo/!svn/ver/78/trunk
+END
+DESIGNDOC
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/nommo/!svn/ver/77/trunk/DESIGNDOC
+END
+Make.config
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/nommo/!svn/ver/55/trunk/Make.config
+END
+Makefile.userprog
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/nommo/!svn/ver/50/trunk/Makefile.userprog
+END
+LICENSE
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/nommo/!svn/ver/50/trunk/LICENSE
+END
+Makefile.build
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/nommo/!svn/ver/59/trunk/Makefile.build
+END
+Makefile.kernel
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/nommo/!svn/ver/50/trunk/Makefile.kernel
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/nommo/!svn/ver/50/trunk/Makefile
+END

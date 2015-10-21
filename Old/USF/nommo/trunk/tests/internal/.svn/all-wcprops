@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/nommo/!svn/ver/50/trunk/tests/internal
+END
+stdlib.c
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/nommo/!svn/ver/50/trunk/tests/internal/stdlib.c
+END
+stdio.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/nommo/!svn/ver/50/trunk/tests/internal/stdio.c
+END
+list.c
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/nommo/!svn/ver/50/trunk/tests/internal/list.c
+END

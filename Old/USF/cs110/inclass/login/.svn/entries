@@ -1,0 +1,50 @@
+8
+
+dir
+87
+https://www.cs.usfca.edu/svn/pjmcnamara2/cs110/inclass/login
+https://www.cs.usfca.edu/svn/pjmcnamara2
+
+
+
+2008-02-25T06:24:28.947794Z
+5
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+12f3d7e9-a5b0-4746-bf85-ad75b41ecfd1
+
+loginDriver.java
+file
+
+
+
+
+2008-09-02T21:45:07.000000Z
+ff6105ede993c2000ec051e32be784db
+2008-02-25T06:24:28.947794Z
+5
+
+login.java
+file
+
+
+
+
+2008-09-02T21:45:07.000000Z
+f04d2c632fee0b1bf66bf0c14d1ffbed
+2008-02-25T06:24:28.947794Z
+5
+

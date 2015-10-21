@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svn/nommo/!svn/ver/72/trunk/lib
+END
+string.c
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/nommo/!svn/ver/50/trunk/lib/string.c
+END
+limits.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/nommo/!svn/ver/50/trunk/lib/limits.h
+END
+stdint.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/nommo/!svn/ver/50/trunk/lib/stdint.h
+END
+string.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/nommo/!svn/ver/50/trunk/lib/string.h
+END
+stdbool.h
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/nommo/!svn/ver/50/trunk/lib/stdbool.h
+END
+stddef.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/nommo/!svn/ver/50/trunk/lib/stddef.h
+END
+random.c
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/nommo/!svn/ver/50/trunk/lib/random.c
+END
+stdlib.c
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/nommo/!svn/ver/50/trunk/lib/stdlib.c
+END
+stdio.c
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/nommo/!svn/ver/79/trunk/lib/stdio.c
+END
+inttypes.h
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/nommo/!svn/ver/50/trunk/lib/inttypes.h
+END
+random.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/nommo/!svn/ver/50/trunk/lib/random.h
+END
+stdlib.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/nommo/!svn/ver/50/trunk/lib/stdlib.h
+END
+debug.c
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/nommo/!svn/ver/50/trunk/lib/debug.c
+END
+stdio.h
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/nommo/!svn/ver/50/trunk/lib/stdio.h
+END
+ctype.h
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/nommo/!svn/ver/50/trunk/lib/ctype.h
+END
+stdarg.h
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/nommo/!svn/ver/50/trunk/lib/stdarg.h
+END
+arithmetic.c
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/nommo/!svn/ver/50/trunk/lib/arithmetic.c
+END
+debug.h
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/nommo/!svn/ver/50/trunk/lib/debug.h
+END
+round.h
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/nommo/!svn/ver/50/trunk/lib/round.h
+END
+syscall-nr.h
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/nommo/!svn/ver/50/trunk/lib/syscall-nr.h
+END
