@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.umsl.simon.MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1">
+        <Button
+            android:id="@+id/top_left_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="topLeftButtonClicked"
+            android:layout_weight="1"
+            android:foreground="#4ba430" />
+        <Button
+            android:id="@+id/top_right_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="topRightButtonClicked"
+            android:layout_weight="1"
+            android:foreground="#9c2c2c" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1">
+        <Button
+            android:id="@+id/bottom_left_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="bottomLeftButtonClicked"
+            android:layout_weight="1"
+            android:foreground="#17207a" />
+        <Button
+            android:id="@+id/bottom_right_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="bottomRightButtonClicked"
+        android:layout_weight="1"
+            android:foreground="#c2d32e" />
+    </LinearLayout>
+</LinearLayout>
