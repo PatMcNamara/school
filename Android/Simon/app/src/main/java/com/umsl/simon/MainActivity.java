@@ -24,8 +24,9 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences highScorePrefs;
     private int animationSpeed;
     private final float animationSpeedChange = (float) .8;
-    public static final String MODEL_KEY = "com.umsl.simon.model";
-    public static final String HIGH_SCORE_PREFS = "HighScore";
+    public static final String MODEL_KEY = "edu.umsl.simon.model";
+    public static final String HIGH_SCORE_PREFS = "edu.umsl.simon.HighScore";
+    public static final String HIGH_SCORE_KEY = "HighScore";
 
     private Handler handler = new Handler();
 
@@ -63,12 +64,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         highScorePrefs = getSharedPreferences(HIGH_SCORE_PREFS, 0);
-        if( !highScorePrefs.contains("HighScore") ) {
-            highScorePrefs.edit().putInt("HighScore", 0).apply();
+        if( !highScorePrefs.contains(HIGH_SCORE_KEY) ) {
+            highScorePrefs.edit().putInt(HIGH_SCORE_KEY, 0).apply();
         }
 
         // We can't call displayPopUp until the entire view is set up so we delay the call.
         handler.postDelayed(displayStartScreen, 250);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
     }
 
     public void topLeftButtonClicked(View v) {
@@ -100,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void displayPopUp(String title, boolean displayCurrentScore) {
         int currentScore = sequence.getSize() - 1;
-        int highScore = highScorePrefs.getInt("HighScore", 0);
+        int highScore = highScorePrefs.getInt(HIGH_SCORE_KEY, 0);
 
         disableColorButtons();
 
@@ -108,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         final PopupWindow popup = new PopupWindow(inflatedView, ViewGroup.MarginLayoutParams.WRAP_CONTENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
         popup.showAtLocation(buttonList.get(0).getRootView(), Gravity.CENTER, 0, 0);
         if(highScore < currentScore) {
-            highScorePrefs.edit().putInt("HighScore", currentScore).apply();
+            highScorePrefs.edit().putInt(HIGH_SCORE_KEY, currentScore).apply();
             highScore = currentScore;
             title = "New High Score";
         }
