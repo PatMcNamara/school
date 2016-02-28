@@ -12,6 +12,12 @@
     tools:context="com.umsl.simon.PopUpActivity">
 
     <TextView
+        android:id="@+id/popup_title"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
         android:id="@+id/current_score_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

@@ -19,9 +19,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MainModel sequence;// = new MainModel();
+    private MainModel sequence;
     private Button ulButton, urButton, blButton, brButton;
-    private ArrayList<Animator> animator;// = new ArrayList<Animator>();
+    private ArrayList<Animator> animator;
     private int position = 0; //TODO this should probably go in the model
     private SharedPreferences highScorePrefs;
     public static final String MODEL_KEY = "com.umsl.simon.model";
@@ -61,13 +61,14 @@ public class MainActivity extends AppCompatActivity {
             }
             animator.add(a);
         }
-        sequence.addRandomElementToSequence();//TODO These 2 lines should be joined with the lines in the if in buttonClicked
-        handler.postDelayed(displayRunnable, 1000);
 
         highScorePrefs = getSharedPreferences(HIGH_SCORE_PREFS, 0);
         if( !highScorePrefs.contains("HighScore") ) {
             highScorePrefs.edit().putInt("HighScore", 0).apply();
         }
+
+        // We can't call displayPopUp until startup is finished so we delay the call.
+        handler.postDelayed(displayStartScreen, 100);
     }
 
     public void topLeftButtonClicked(View v) {
@@ -94,32 +95,38 @@ public class MainActivity extends AppCompatActivity {
                 handler.postDelayed(displayRunnable, 1000);
             }
         } else {
-            int currentScore = sequence.getSize() - 1;
-            int highScore = highScorePrefs.getInt("HighScore", 0);
-
-            //TODO set up high score shit.
-            //TODO this should be constructed in onStart so we can pull it up at the begining. Or just put it in its own method.
-            View inflatedView = getLayoutInflater().inflate(R.layout.activity_pop_up, null, false);
-            final PopupWindow popup = new PopupWindow(inflatedView, ViewGroup.MarginLayoutParams.WRAP_CONTENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
-            popup.showAtLocation(blButton.getRootView(), Gravity.CENTER, 0, 0);
-            if(highScore < currentScore) {//TODO need a high score indicator, add it to the initial screen
-                highScorePrefs.edit().putInt("HighScore", currentScore).apply();
-            }
-
-            ((TextView) inflatedView.findViewById(R.id.current_score_text)).setText("Current Score: " + currentScore);
-            ((TextView) inflatedView.findViewById(R.id.high_score_text)).setText("High Score: " + highScore);
-            ((Button) inflatedView.findViewById(R.id.start_button)).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sequence.clear();
-                    position = 0;
-                    sequence.addRandomElementToSequence();
-                    handler.postDelayed(displayRunnable, 1000);
-                    popup.dismiss();
-                }
-            });
-//            /*TextView currentScore =*/ ((TextView) findViewById(R.id.current_score_text)).setText(R.string.current_score /* + sequence.getSize()*/);
+            displayPopUp("Game Over", true);
         }
+    }
+
+    private void displayPopUp(String title, boolean displayCurrentScore) {
+        int currentScore = sequence.getSize() - 1;
+        int highScore = highScorePrefs.getInt("HighScore", 0);
+
+        View inflatedView = getLayoutInflater().inflate(R.layout.activity_pop_up, null, false);
+        final PopupWindow popup = new PopupWindow(inflatedView, ViewGroup.MarginLayoutParams.WRAP_CONTENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
+        popup.showAtLocation(blButton.getRootView(), Gravity.CENTER, 0, 0);
+        if(highScore < currentScore) {
+            highScorePrefs.edit().putInt("HighScore", currentScore).apply();
+            highScore = currentScore;
+        }
+
+        ((TextView) inflatedView.findViewById(R.id.popup_title)).setText(title);
+        if(displayCurrentScore) {
+            ((TextView) inflatedView.findViewById(R.id.current_score_text)).setText("Current Score: " + currentScore);
+        }
+        ((TextView) inflatedView.findViewById(R.id.high_score_text)).setText("High Score: " + highScore);
+
+        ((Button) inflatedView.findViewById(R.id.start_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sequence.clear();
+                position = 0;
+                sequence.addRandomElementToSequence();
+                handler.postDelayed(displayRunnable, 1000);
+                popup.dismiss();
+            }
+        });
     }
 
     private Runnable displayRunnable = new Runnable() {
@@ -132,6 +139,13 @@ public class MainActivity extends AppCompatActivity {
             } else { // we are at the end of the sequence
                 animatePosition = 0;
             }
+        }
+    };
+
+    private Runnable displayStartScreen = new Runnable() {
+        @Override
+        public void run() {
+            displayPopUp("Welcome", false);
         }
     };
 }
