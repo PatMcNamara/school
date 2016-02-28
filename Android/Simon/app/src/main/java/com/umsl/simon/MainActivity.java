@@ -4,11 +4,11 @@ package com.umsl.simon;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -22,8 +22,10 @@ public class MainActivity extends AppCompatActivity {
     private MainModel sequence;// = new MainModel();
     private Button ulButton, urButton, blButton, brButton;
     private ArrayList<Animator> animator;// = new ArrayList<Animator>();
-    private int position = 0;
+    private int position = 0; //TODO this should probably go in the model
+    private SharedPreferences highScorePrefs;
     public static final String MODEL_KEY = "com.umsl.simon.model";
+    public static final String HIGH_SCORE_PREFS = "HighScore";
 
     private Handler handler = new Handler();
 
@@ -61,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
         }
         sequence.addRandomElementToSequence();//TODO These 2 lines should be joined with the lines in the if in buttonClicked
         handler.postDelayed(displayRunnable, 1000);
+
+        highScorePrefs = getSharedPreferences(HIGH_SCORE_PREFS, 0);
+        if( !highScorePrefs.contains("HighScore") ) {
+            highScorePrefs.edit().putInt("HighScore", 0).apply();
+        }
     }
 
     public void topLeftButtonClicked(View v) {
@@ -87,13 +94,20 @@ public class MainActivity extends AppCompatActivity {
                 handler.postDelayed(displayRunnable, 1000);
             }
         } else {
+            int currentScore = sequence.getSize() - 1;
+            int highScore = highScorePrefs.getInt("HighScore", 0);
+
             //TODO set up high score shit.
             //TODO this should be constructed in onStart so we can pull it up at the begining. Or just put it in its own method.
             View inflatedView = getLayoutInflater().inflate(R.layout.activity_pop_up, null, false);
             final PopupWindow popup = new PopupWindow(inflatedView, ViewGroup.MarginLayoutParams.WRAP_CONTENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT);
-            popup.showAtLocation(blButton.getRootView(), Gravity.CENTER, 0,0);
-            ((TextView) inflatedView.findViewById(R.id.current_score_text)).setText("Current Score: " + (sequence.getSize() - 1));
+            popup.showAtLocation(blButton.getRootView(), Gravity.CENTER, 0, 0);
+            if(highScore < currentScore) {//TODO need a high score indicator, add it to the initial screen
+                highScorePrefs.edit().putInt("HighScore", currentScore).apply();
+            }
 
+            ((TextView) inflatedView.findViewById(R.id.current_score_text)).setText("Current Score: " + currentScore);
+            ((TextView) inflatedView.findViewById(R.id.high_score_text)).setText("High Score: " + highScore);
             ((Button) inflatedView.findViewById(R.id.start_button)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
