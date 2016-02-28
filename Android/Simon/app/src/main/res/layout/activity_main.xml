@@ -45,6 +45,6 @@
             android:layout_height="match_parent"
             android:onClick="bottomRightButtonClicked"
             android:layout_weight="1"
-            android:background="@color/standingYellow" />
+            android:background="@color/standingOrange" />
     </LinearLayout>
 </LinearLayout>
