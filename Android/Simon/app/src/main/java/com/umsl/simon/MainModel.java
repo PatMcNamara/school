@@ -11,21 +11,26 @@ import java.util.ArrayList;
 public class MainModel {
     private ArrayList<Integer> sequence = new ArrayList<Integer>();
  //   int position = 0;
-    private ArrayList<Animator> animator = new ArrayList<Animator>();//This might not go in the model
 
     public MainModel() {
-        for(int i = 0; i < 4; i++) {
-            Animator a = AnimatorInflater.loadAnimator(this, );
-        }
+
+    }
+
+    public void addRandomElementToSequence() {
+        addToSequence((int) (Math.random() * 4));
     }
 
     public void addToSequence(int id) {
         sequence.add(id);
     }
 
-    public int get(int position) {
-        return sequence.get(position);
+    public int getSize() { return sequence.size(); }
+
+    public int get(int index) {
+        return sequence.get(index);
     }
+
+    public void clear() { sequence.clear(); }
 /*    public String getNext() {
         if(position == sequence.size()) {
             return null;

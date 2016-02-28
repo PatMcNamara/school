@@ -19,14 +19,14 @@
             android:layout_height="match_parent"
             android:onClick="topLeftButtonClicked"
             android:layout_weight="1"
-            android:foreground="#4ba430" />
+            android:background="@color/standingGreen" />
         <Button
             android:id="@+id/top_right_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:onClick="topRightButtonClicked"
             android:layout_weight="1"
-            android:foreground="#9c2c2c" />
+            android:background="@color/standingRed" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,13 +38,13 @@
             android:layout_height="match_parent"
             android:onClick="bottomLeftButtonClicked"
             android:layout_weight="1"
-            android:foreground="#17207a" />
+            android:background="@color/standingBlue" />
         <Button
             android:id="@+id/bottom_right_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:onClick="bottomRightButtonClicked"
-        android:layout_weight="1"
-            android:foreground="#c2d32e" />
+            android:layout_weight="1"
+            android:background="@color/standingYellow" />
     </LinearLayout>
 </LinearLayout>
