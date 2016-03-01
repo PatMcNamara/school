@@ -1,8 +1,5 @@
 package com.umsl.simon;
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-
 import java.util.ArrayList;
 
 /**
@@ -10,11 +7,6 @@ import java.util.ArrayList;
  */
 public class MainModel {
     private ArrayList<Integer> sequence = new ArrayList<Integer>();
- //   int position = 0;
-
-    public MainModel() {
-
-    }
 
     public void addRandomElementToSequence() {
         addToSequence((int) (Math.random() * 4));
@@ -31,14 +23,20 @@ public class MainModel {
     }
 
     public void clear() { sequence.clear(); }
-/*    public String getNext() {
-        if(position == sequence.size()) {
-            return null;
+
+    // Should only be used to get the values for putting into a bundle
+    public int[] getSequence() {
+        int[] ret = new int[sequence.size()];
+        for(int i = 0; i < sequence.size(); i++) {
+            ret[i] = sequence.get(i);
         }
-        return sequence.get(position++);
+        return ret;
     }
 
-    public void resetPosition() {
-        position = 0;
-    }*/
+    // Should only be used for initializing a model with given values (presumably the same ones put in a bundle after calling getSequence
+    public void setSequence(int[] array) {
+        for(int i : array) {
+            sequence.add(i);
+        }
+    }
 }
