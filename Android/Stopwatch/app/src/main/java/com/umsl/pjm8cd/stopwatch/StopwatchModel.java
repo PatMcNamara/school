@@ -3,7 +3,9 @@ package com.umsl.pjm8cd.stopwatch;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -11,11 +13,16 @@ import java.util.Date;
  */
 public class StopwatchModel extends Fragment {
     interface StopwatchModelDelegate {
-        void updateTime(int elapsedTime);
+        void updateTime(int totalElapsedTime, int totalLapTime);
+        void showLapView();
+        void hideLapView();
     }
 
     Date timeStarted;
+    Date lapStarted;
     Date timePaused; // Should be null if timer is running.
+
+    ArrayList<String> laps = new ArrayList<>();
 
     Handler handler;
     Tick runnable = new Tick();
@@ -27,12 +34,6 @@ public class StopwatchModel extends Fragment {
         handler = new Handler();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
     public void setDelegate(StopwatchModelDelegate delegate) {
         this.delegate = delegate;
     }
@@ -40,42 +41,52 @@ public class StopwatchModel extends Fragment {
     void startStop(Date time) {
         if(timeStarted == null) { // Start timer
             timeStarted = time;
+            lapStarted = (Date) time.clone();
             handler.postDelayed(runnable, 1);
         } else if(timePaused != null) { // unpause timer
-            long elapsedPauseTime = System.currentTimeMillis() - timePaused.getTime();
+            long elapsedPauseTime = time.getTime() - timePaused.getTime();
+//            Log.v("STOPWATCH", "Elapsed time = " + elapsedPauseTime);
             timeStarted.setTime(timeStarted.getTime() + elapsedPauseTime);
+            lapStarted.setTime(lapStarted.getTime() + elapsedPauseTime);
             updateTimer();
             handler.postDelayed(runnable, 1);
             timePaused = null;
         } else { // Stop timer
-            timePaused = new Date();
+            timePaused = time;
             updateTimer();
             handler.removeCallbacks(runnable);
         }
     }
 
-    void lapReset() {
+    void lapReset(Date time) {
         if(timePaused != null) { /* Reset*/
-            timeStarted = timePaused = null;
+            timeStarted = timePaused = lapStarted = null;
+            delegate.hideLapView();
             updateTimer();
-        } else {/* lap */
-            //TODO
+        } else {/* Lap */
+            laps.add(StopwatchViewFragment.formatTimeString(time.getTime() - lapStarted.getTime()));
+            lapStarted = time;
+            delegate.hideLapView();//TODO This is hacky
+            delegate.showLapView();
         }
     }
 
     void updateTimer() {
         if(timeStarted == null) {
-            delegate.updateTime(0);
-        } else {
-            delegate.updateTime((int) (System.currentTimeMillis() - timeStarted.getTime()));
+            delegate.updateTime(0, 0);
+        } else {//TODO send time started and do the calculation in the view.
+            delegate.updateTime((int) (System.currentTimeMillis() - timeStarted.getTime()), (int) (System.currentTimeMillis() - lapStarted.getTime()));
         }
     }
 
-    private class Tick implements Runnable {//TODO You could probably just move all this to the class insted of subclassing it.
+    private class Tick implements Runnable {//TODO You could probably just move all this to the class instead of subclassing it.
         @Override
         public void run() {
             updateTimer();
             handler.postDelayed(this, 1);
         }
+    }
+    public ArrayList<String> getLaps() {
+        return laps;
     }
 }
