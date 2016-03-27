@@ -21,7 +21,7 @@ public class LapViewFragment extends Fragment {
         List<String> getLapTimes();
     }
 
-    RecyclerView lapRecyclerView;
+    private RecyclerView lapRecyclerView;
 
     public void setDelegate(LapViewDelegate delegate) {
         this.delegate = delegate;
@@ -38,16 +38,8 @@ public class LapViewFragment extends Fragment {
         return view;
     }
 
-    public void update() {
-        lapRecyclerView.setAdapter(new LapAdapter());
-    }
-
-    public void expandView(View lapView) {
-        lapView.setVisibility(View.VISIBLE);
-    }
-
     private class LapHolder extends RecyclerView.ViewHolder {
-        TextView time;
+        private TextView time;
 
         public LapHolder(View itemView) {
             super(itemView);

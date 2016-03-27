@@ -52,13 +52,20 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /* The onDestroy and OnStart methods make sure that the handler is stopped and started when timer updates aren't needed. */
     @Override
     protected void onStart() {
         super.onStart();
         model.updateTimer();
+        if(model.isRunning()) {
+            model.startRunning();
+        }
     }
-
-    //TODO onDestroy must update the model.
+    @Override
+    protected void onStop() {
+        super.onStop();
+        model.stopRunning();
+    }
 
     @Override
     public void startStop(Date time) {
@@ -77,8 +84,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void showLapView() {
-//        lapView.expandView(findViewById(R.id.lap_layout));
-        findViewById(R.id.lap_layout).setVisibility(View.VISIBLE);//TODO this could go in the view I guess
+        findViewById(R.id.lap_layout).setVisibility(View.VISIBLE);
     }
 
     @Override

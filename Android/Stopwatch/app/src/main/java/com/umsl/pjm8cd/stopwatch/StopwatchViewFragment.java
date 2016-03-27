@@ -21,13 +21,13 @@ public class StopwatchViewFragment extends Fragment {
         void lapReset(Date time);
     }
 
-    StopwatchFragmentDelegate delegate;
-    boolean isRunning = false;
+    private StopwatchFragmentDelegate delegate;
+    private boolean isRunning = false;
 
-    TextView elapsedTime;
-    TextView lapTime;
-    Button startStopButton;
-    Button lapResetButton;
+    private TextView elapsedTime;
+    private TextView lapTime;
+    private Button startStopButton;
+    private Button lapResetButton;
 
     public void setDelegate(StopwatchFragmentDelegate delegate) {
         this.delegate = delegate;
@@ -39,10 +39,8 @@ public class StopwatchViewFragment extends Fragment {
         setRetainInstance(true);//TODO
         View view = inflater.inflate(R.layout.main_fragment_view, container, false);
 
-//        isRunning = false;
         elapsedTime = (TextView) view.findViewById(R.id.total_timer);
         lapTime = (TextView) view.findViewById(R.id.lap_timer);
-
         startStopButton = (Button) view.findViewById(R.id.start_button);
         lapResetButton = (Button) view.findViewById(R.id.reset_button);
 
@@ -53,12 +51,14 @@ public class StopwatchViewFragment extends Fragment {
                 if (delegate != null) {
                     delegate.startStop(new Date());
 
+                    // Switch the button text.
                     if (isRunning) {
                         isRunning = false;
                     } else {
                         isRunning = true;
                     }
                     updateButtonText();
+
                 } else {
                     Log.e("Stopwatch", "Stop/start button pressed while view fragment has no delegate set.");
                 }
@@ -87,14 +87,15 @@ public class StopwatchViewFragment extends Fragment {
     /* Will set the text of the buttons based on if stopwatch is running or not. */
     public void updateButtonText() {
         if (isRunning) {
-            startStopButton.setText("Stop");
-            lapResetButton.setText("Lap");
+            startStopButton.setText(R.string.stop);
+            lapResetButton.setText(R.string.lap);
         } else {
-            startStopButton.setText("Start"); //TODO this should use a R.string
-            lapResetButton.setText("Reset");
+            startStopButton.setText(R.string.start);
+            lapResetButton.setText(R.string.reset);
         }
     }
 
+    /* Sets total and lap time to the specified values */
     public void updateTime(int totalMillisecondsElapsed, int lapMillisecondsElapsed) {
         elapsedTime.setText(formatTimeString(totalMillisecondsElapsed));
         lapTime.setText(formatTimeString(lapMillisecondsElapsed));
