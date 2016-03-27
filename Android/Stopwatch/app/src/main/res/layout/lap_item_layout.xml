@@ -7,6 +7,9 @@
         android:id="@+id/item_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Lap Time"/>
+        android:layout_margin="5sp"
+        android:textAlignment="textEnd"
+        android:layout_gravity="end"
+        android:textSize="20sp"/>
 
 </LinearLayout>

@@ -45,7 +45,6 @@ public class StopwatchModel extends Fragment {
             handler.postDelayed(runnable, 1);
         } else if(timePaused != null) { // unpause timer
             long elapsedPauseTime = time.getTime() - timePaused.getTime();
-//            Log.v("STOPWATCH", "Elapsed time = " + elapsedPauseTime);
             timeStarted.setTime(timeStarted.getTime() + elapsedPauseTime);
             lapStarted.setTime(lapStarted.getTime() + elapsedPauseTime);
             updateTimer();
@@ -61,9 +60,10 @@ public class StopwatchModel extends Fragment {
     void lapReset(Date time) {
         if(timePaused != null) { /* Reset*/
             timeStarted = timePaused = lapStarted = null;
+            laps.clear();
             delegate.hideLapView();
             updateTimer();
-        } else {/* Lap */
+        } else if(timeStarted != null){ /* Lap */
             laps.add(StopwatchViewFragment.formatTimeString(time.getTime() - lapStarted.getTime()));
             lapStarted = time;
             delegate.hideLapView();//TODO This is hacky
@@ -75,12 +75,13 @@ public class StopwatchModel extends Fragment {
         if(timeStarted == null) {
             delegate.updateTime(0, 0);
         } else {//TODO send time started and do the calculation in the view.
+            //TODO if it is paused, this must be included.
             delegate.updateTime((int) (System.currentTimeMillis() - timeStarted.getTime()), (int) (System.currentTimeMillis() - lapStarted.getTime()));
         }
     }
 
     private class Tick implements Runnable {//TODO You could probably just move all this to the class instead of subclassing it.
-        @Override
+        @Override //TODO there is no reason to keep this running OnExit, we still have the data saved.
         public void run() {
             updateTimer();
             handler.postDelayed(this, 1);
@@ -88,5 +89,11 @@ public class StopwatchModel extends Fragment {
     }
     public ArrayList<String> getLaps() {
         return laps;
+    }
+
+    public boolean isRunning() {
+        if(timeStarted == null)
+            return false;
+        return true;
     }
 }

@@ -22,9 +22,12 @@ public class StopwatchViewFragment extends Fragment {
     }
 
     StopwatchFragmentDelegate delegate;
+    boolean isRunning = false;
+
     TextView elapsedTime;
-    TextView lapTime; //TODO make lap timer visually different from the elapsed time.
-    boolean isRunning;
+    TextView lapTime;
+    Button startStopButton;
+    Button lapResetButton;
 
     public void setDelegate(StopwatchFragmentDelegate delegate) {
         this.delegate = delegate;
@@ -33,37 +36,35 @@ public class StopwatchViewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setRetainInstance(true);//TODO
         View view = inflater.inflate(R.layout.main_fragment_view, container, false);
 
-        isRunning = false;
+//        isRunning = false;
         elapsedTime = (TextView) view.findViewById(R.id.total_timer);
         lapTime = (TextView) view.findViewById(R.id.lap_timer);
 
-        final Button startStop = (Button) view.findViewById(R.id.start_button);
-        final Button lapReset = (Button) view.findViewById(R.id.reset_button);
+        startStopButton = (Button) view.findViewById(R.id.start_button);
+        lapResetButton = (Button) view.findViewById(R.id.reset_button);
 
-        startStop.setOnClickListener(new View.OnClickListener() {
+        startStopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Call start/stop with the current date
                 if (delegate != null) {
                     delegate.startStop(new Date());
+
                     if (isRunning) {
-                        startStop.setText("Start");
-                        lapReset.setText("Reset");
                         isRunning = false;
                     } else {
-                        startStop.setText("Stop");
-                        lapReset.setText("Lap");
                         isRunning = true;
                     }
+                    updateButtonText();
                 } else {
                     Log.e("Stopwatch", "Stop/start button pressed while view fragment has no delegate set.");
                 }
-
             }
         });
-        lapReset.setOnClickListener(new View.OnClickListener() {
+        lapResetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Call reset with the current date
@@ -77,20 +78,25 @@ public class StopwatchViewFragment extends Fragment {
         return view;
     }
 
-    public void updateTime(int totalMillisecondsElapsed, int lapMillisecondsElapsed) {
-//        int milliseconds = totalMillisecondsElapsed % 1000;//TODO this should be a method. Takes a long, returns a string. Can also be used from stopwatch model.
-//        totalMillisecondsElapsed /= 1000;
-//        int seconds = totalMillisecondsElapsed % 60;//TODO instead use %16000 and don't update millisecondsEllapsed.
-//        totalMillisecondsElapsed /= 60;
-//        //elapsedTime.setText(totalMillisecondsElapsed + ":" + seconds + ":" + milliseconds);
-//        elapsedTime.setText(String.format("%02d:%02d:%03d", totalMillisecondsElapsed, seconds, milliseconds));
-        elapsedTime.setText(formatTimeString(totalMillisecondsElapsed));
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateButtonText();
+    }
 
-       /* milliseconds = lapMillisecondsElapsed % 1000;
-        lapMillisecondsElapsed /= 1000;
-        seconds = lapMillisecondsElapsed % 60;//TODO instead use %16000 and don't update millisecondsEllapsed.
-        lapMillisecondsElapsed /= 60;
-        lapTime.setText(String.format("%02d:%02d:%03d", lapMillisecondsElapsed, seconds, milliseconds));*/
+    /* Will set the text of the buttons based on if stopwatch is running or not. */
+    public void updateButtonText() {
+        if (isRunning) {
+            startStopButton.setText("Stop");
+            lapResetButton.setText("Lap");
+        } else {
+            startStopButton.setText("Start"); //TODO this should use a R.string
+            lapResetButton.setText("Reset");
+        }
+    }
+
+    public void updateTime(int totalMillisecondsElapsed, int lapMillisecondsElapsed) {
+        elapsedTime.setText(formatTimeString(totalMillisecondsElapsed));
         lapTime.setText(formatTimeString(lapMillisecondsElapsed));
     }
 

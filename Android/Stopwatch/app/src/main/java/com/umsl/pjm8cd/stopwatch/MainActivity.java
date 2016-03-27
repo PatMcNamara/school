@@ -30,24 +30,35 @@ public class MainActivity extends AppCompatActivity
         if(model == null) {
             model = new StopwatchModel();
             manager.beginTransaction().add(model, MODEL_TAG).commit();
-            model.setDelegate(this);
         }
+        model.setDelegate(this);
 
         stopwatchView = (StopwatchViewFragment) manager.findFragmentById(R.id.timer_layout);
         if(stopwatchView == null) {
             stopwatchView = new StopwatchViewFragment();
             manager.beginTransaction().add(R.id.timer_layout, stopwatchView).commit();
-            stopwatchView.setDelegate(this);
         }
+        stopwatchView.setDelegate(this);
 
         lapView = (LapViewFragment) manager.findFragmentById(R.id.lap_layout);
         if(lapView == null) {
             lapView = new LapViewFragment();
             manager.beginTransaction().add(R.id.lap_layout, lapView).commit();
-            lapView.setDelegate(this);
+        }
+        lapView.setDelegate(this);
+
+        if(model.getLaps().size() != 0) {
+            showLapView();
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        model.updateTimer();
+    }
+
+    //TODO onDestroy must update the model.
 
     @Override
     public void startStop(Date time) {

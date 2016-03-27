@@ -30,10 +30,11 @@ public class LapViewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setRetainInstance(true);//TODO
         View view = inflater.inflate(R.layout.lap_view_layout, container, false);
         lapRecyclerView = (RecyclerView) view.findViewById(R.id.lap_recycler_view);
         lapRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        lapRecyclerView.setAdapter(new LapAdapter()); //TODO what should go in a blank adapter?
+        lapRecyclerView.setAdapter(new LapAdapter());
         return view;
     }
 
