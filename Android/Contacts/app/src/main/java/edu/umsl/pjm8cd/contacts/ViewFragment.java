@@ -1,20 +1,25 @@
 package edu.umsl.pjm8cd.contacts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.List;
 
 /**
  * Created by Pat on 4/17/2016.
  */
 public class ViewFragment extends Fragment {
     RecyclerView contactRecyclerView;
+    List<Contact> contacts;
 
     @Nullable
     @Override
@@ -22,24 +27,47 @@ public class ViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.contact_list_layout, container, false);
         contactRecyclerView = (RecyclerView) view.findViewById(R.id.contacts_recycler_view);
         contactRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        contactRecyclerView.setAdapter(new LapAdapter());
+
+        contacts = DBWrapper.get(getContext()).getAllContacts();
+        contactRecyclerView.setAdapter(new ContactsAdapter());//TODO you must update the adapter when you update something
         return view;
     }
 
-    private class ContactHolder extends RecyclerView.ViewHolder {
-        private TextView fName;
-        private TextView lName;
-        private TextView email;
+    public void updateView() {
+        contacts = DBWrapper.get(getContext()).getAllContacts();
+        contactRecyclerView.setAdapter(new ContactsAdapter());
+    }
+
+    private class ContactHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView nameView;
+        private TextView emailView;
         //TODO photo, send message.
+        private Contact contact;
 
         public ContactHolder(View itemView) {
-
             super(itemView);
-            //time = (TextView) itemView.findViewById(R.id.item_text);
+            itemView.setOnClickListener(this);
+
+            nameView = (TextView) itemView.findViewById(R.id.NameText);
+            emailView = (TextView) itemView.findViewById(R.id.emailText);
+        }
+
+        public void bindContact(Contact c) {
+            String name = c.getFirstName() + ", " + c.getLastName();
+            nameView.setText(name);
+            emailView.setText(c.getEmail());
+            contact = c;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = EditContactActivity.newIntent(getContext(), contact);
+            Log.d("", "Put value " + intent.getStringExtra(EditContactActivity.UUID) + " into intent.");
+            startActivity(intent);
         }
     }
 
-    private class LapAdapter extends RecyclerView.Adapter<ContactHolder> {
+    private class ContactsAdapter extends RecyclerView.Adapter<ContactHolder> {
         @Override
         public ContactHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
@@ -49,12 +77,13 @@ public class ViewFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(ContactHolder holder, int position) {
-            ;
+            Contact c = contacts.get(position);
+            holder.bindContact(c);
         }
 
         @Override
         public int getItemCount() {
-            return 10;
+            return contacts.size();
         }
     }
 }

@@ -8,7 +8,6 @@ import android.view.View;
 
 public class ContactsActivityControler extends AppCompatActivity {
     ViewFragment viewFragment;
-    EditFragment editFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,5 +27,11 @@ public class ContactsActivityControler extends AppCompatActivity {
     public void newContact(View v) {
         Intent i = EditContactActivity.newIntent(this);
         startActivity(i);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        viewFragment.updateView();
     }
 }

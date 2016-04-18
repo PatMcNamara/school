@@ -22,7 +22,7 @@ public class ContactBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + ContactTable.NAME + " (" +
                 "_id integer primary key autoincrement, " +
-                ContactTable.Cols.UUID + " INTEGER, " +
+                ContactTable.Cols.UUID + " TEXT, " +
                 ContactTable.Cols.FNAME + " TEXT, " +
                 ContactTable.Cols.LNAME + " TEXT, " +
                 ContactTable.Cols.EMAIL + " TEXT)"

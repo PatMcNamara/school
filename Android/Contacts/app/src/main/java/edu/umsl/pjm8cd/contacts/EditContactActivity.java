@@ -19,8 +19,16 @@ public class EditContactActivity extends AppCompatActivity {
     DBWrapper database;
     Button saveButton, cancelButton;
 
+    public static final String UUID = "UUID";
+
     public static Intent newIntent(Context currentContext) {
         Intent i = new Intent(currentContext, EditContactActivity.class);
+        return i;
+    }
+
+    public static Intent newIntent(Context currentContext, Contact contact) {
+        Intent i = EditContactActivity.newIntent(currentContext);
+        i.putExtra(UUID, contact.getId().toString());
         return i;
     }
 
@@ -34,18 +42,36 @@ public class EditContactActivity extends AppCompatActivity {
         saveButton = (Button) findViewById(R.id.bottomButtonLeft);
         cancelButton = (Button) findViewById(R.id.bottomButtonRight);
 
+        if(getIntent().getStringExtra(UUID) == null) {
+            enableEditing();
+        } else {
+            disableEditing();
+        }
+
+        FragmentManager manager = getSupportFragmentManager();
+        editFragment = (EditFragment) manager.findFragmentById(R.id.contacts_listing_layout);
+
+        if (editFragment == null) {
+            editFragment = new EditFragment();
+            manager.beginTransaction()
+                    .add(R.id.contacts_listing_layout, editFragment)
+                    .commit();
+        }
+    }
+
+    private void enableEditing() {
         saveButton.setText("Save");
         cancelButton.setText("Cancel");
         cancelButton.setVisibility(Button.VISIBLE);
-
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Contact c = editFragment.getContact();
-                if(c == null) {
+                if (c == null) {
                     Toast.makeText(getApplicationContext(), "All 3 fields must be used.", Toast.LENGTH_SHORT);
                 } else {
-                    database.addContact(c);
+                    //if(getIntent().getStringExtra(UUID) == null) {// add a new contact
+                    database.updateOrAddContact(c);
                     finish();
                 }
             }
@@ -57,16 +83,17 @@ public class EditContactActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
 
-        FragmentManager manager = getSupportFragmentManager();
-        editFragment = (EditFragment) manager.findFragmentById(R.id.contacts_listing_layout);
-
-        if (editFragment == null) {
-            editFragment = new EditFragment();
-            manager.beginTransaction()
-                    .add(R.id.contacts_listing_layout, editFragment)
-                    .commit();
-        }
-
+    private void disableEditing() {
+        saveButton.setText("Edit");
+        cancelButton.setVisibility(Button.GONE);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editFragment.setEditable(true);
+                enableEditing();
+            }
+        });
     }
 }
