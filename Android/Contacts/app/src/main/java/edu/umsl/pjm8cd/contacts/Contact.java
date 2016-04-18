@@ -18,6 +18,11 @@ public class Contact {
 
     public Contact(UUID id) {
         this.id = id;
+
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getFirstName() {
