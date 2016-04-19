@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,7 +71,6 @@ public class EditContactActivity extends AppCompatActivity {
                 if (c == null) {
                     Toast.makeText(getApplicationContext(), "All 3 fields must be used.", Toast.LENGTH_SHORT);
                 } else {
-                    //if(getIntent().getStringExtra(UUID) == null) {// add a new contact
                     database.updateOrAddContact(c);
                     finish();
                 }
@@ -95,5 +95,17 @@ public class EditContactActivity extends AppCompatActivity {
                 enableEditing();
             }
         });
+    }
+
+    public void sendMessage(View v){
+        Contact c = editFragment.getContact();
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.putExtra(Intent.EXTRA_EMAIL, c.getEmail());
+        i.setType("*/*");
+        i = Intent.createChooser(i, "Choose messaging application");
+
+        if (i.resolveActivity(getPackageManager()) != null) {
+            startActivity(i);
+        }
     }
 }

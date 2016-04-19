@@ -46,8 +46,8 @@ public class EditFragment extends Fragment {
 
     public void setEditable(boolean editable) {
         if(editable) {
-            firstName.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
-            lastName.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+            firstName.setInputType(InputType.TYPE_CLASS_TEXT);
+            lastName.setInputType(InputType.TYPE_CLASS_TEXT);
             email.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS | InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS);
         } else {
             firstName.setInputType(InputType.TYPE_NULL);
@@ -57,16 +57,13 @@ public class EditFragment extends Fragment {
     }
 
     public Contact getContact() {
-        String first = firstName.getText().toString();//TODO this belongs in the view
+        String first = firstName.getText().toString();
         String last = lastName.getText().toString();
         String addr = email.getText().toString();
-        if(first == null || last == null || addr == null) {
-            return null;
-        }
-        String contactUUID = getActivity().getIntent().getStringExtra(EditContactActivity.UUID);
-        Contact newContact;
 
         // If we are updating an existing contact, use the same UUID
+        String contactUUID = getActivity().getIntent().getStringExtra(EditContactActivity.UUID);
+        Contact newContact;
         if(contactUUID == null) {
             newContact = new Contact();
         } else {

@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="First Name"
+        android:hint="First Name"
         android:ems="10"
         android:id="@+id/firstNameEdit" />
 
@@ -15,32 +15,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Last Name"
+        android:hint="Last Name"
         android:ems="10"
         android:id="@+id/lastNameEdit" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/emailEdit" />
-
-    <!--<LinearLayout
-        android:orientation="horizontal"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <Button
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:id="@+id/emailEdit"
+            android:hint="Email Address"
+            android:layout_toLeftOf="@+id/sendMessageButton"/>
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Confirm"
-            android:id="@+id/confirmButton" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Discard"
-            android:id="@+id/discardButton" />
-    </LinearLayout>-->
+            android:id="@+id/sendMessageButton"
+            android:onClick="sendMessage"
+            android:src="@drawable/ic_email_black_24dp"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
 </LinearLayout>
