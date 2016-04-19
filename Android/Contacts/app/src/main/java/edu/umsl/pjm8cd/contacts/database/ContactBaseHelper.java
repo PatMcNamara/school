@@ -25,8 +25,9 @@ public class ContactBaseHelper extends SQLiteOpenHelper {
                 ContactTable.Cols.UUID + " TEXT, " +
                 ContactTable.Cols.FNAME + " TEXT, " +
                 ContactTable.Cols.LNAME + " TEXT, " +
-                ContactTable.Cols.EMAIL + " TEXT)"
-        );//TODO photo
+                ContactTable.Cols.EMAIL + " TEXT, " +
+                ContactTable.Cols.PHOTO + " BLOB)"
+        );
     }
 
     @Override

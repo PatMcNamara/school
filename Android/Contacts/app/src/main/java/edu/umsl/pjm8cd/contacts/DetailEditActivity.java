@@ -6,29 +6,31 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 /**
  * Created by Pat on 4/17/2016.
+ *
+ * Activity for the ContactDetailsView fragment.
  */
-public class EditContactActivity extends AppCompatActivity {
-    EditFragment editFragment;
-    DBWrapper database;
-    Button saveButton, cancelButton;
+public class DetailEditActivity extends AppCompatActivity {
+    private ContactDetailsView contactDetailsView;
+    private DBWrapper database;
+    private Button saveButton, cancelButton;
 
     public static final String UUID = "UUID";
 
+    /* Used to bring up add a new contact view. */
     public static Intent newIntent(Context currentContext) {
-        Intent i = new Intent(currentContext, EditContactActivity.class);
+        Intent i = new Intent(currentContext, DetailEditActivity.class);
         return i;
     }
 
+    /* This will simply display the contact info and an edit button. */
     public static Intent newIntent(Context currentContext, Contact contact) {
-        Intent i = EditContactActivity.newIntent(currentContext);
+        Intent i = DetailEditActivity.newIntent(currentContext);
         i.putExtra(UUID, contact.getId().toString());
         return i;
     }
@@ -43,6 +45,7 @@ public class EditContactActivity extends AppCompatActivity {
         saveButton = (Button) findViewById(R.id.bottomButtonLeft);
         cancelButton = (Button) findViewById(R.id.bottomButtonRight);
 
+        /* Are we adding a new contact or bring up an edit contact screen? */
         if(getIntent().getStringExtra(UUID) == null) {
             enableEditing();
         } else {
@@ -50,26 +53,29 @@ public class EditContactActivity extends AppCompatActivity {
         }
 
         FragmentManager manager = getSupportFragmentManager();
-        editFragment = (EditFragment) manager.findFragmentById(R.id.contacts_listing_layout);
+        contactDetailsView = (ContactDetailsView) manager.findFragmentById(R.id.contacts_listing_layout);
 
-        if (editFragment == null) {
-            editFragment = new EditFragment();
+        if (contactDetailsView == null) {
+            contactDetailsView = new ContactDetailsView();
             manager.beginTransaction()
-                    .add(R.id.contacts_listing_layout, editFragment)
+                    .add(R.id.contacts_listing_layout, contactDetailsView)
                     .commit();
         }
     }
 
+    /* Will allow the user to change the fields in the given contact */
     private void enableEditing() {
         saveButton.setText("Save");
         cancelButton.setText("Cancel");
         cancelButton.setVisibility(Button.VISIBLE);
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Contact c = editFragment.getContact();
-                if (c == null) {
-                    Toast.makeText(getApplicationContext(), "All 3 fields must be used.", Toast.LENGTH_SHORT);
+                // Add contact with the given info into the database.
+                Contact c = contactDetailsView.buildContact();
+                if (c.hasNoName()) {
+                    Toast.makeText(getApplicationContext(), "Contact must have a name.", Toast.LENGTH_SHORT).show();
                 } else {
                     database.updateOrAddContact(c);
                     finish();
@@ -85,20 +91,21 @@ public class EditContactActivity extends AppCompatActivity {
         });
     }
 
+    /* Use this if you are just reading the contact details. */
     private void disableEditing() {
         saveButton.setText("Edit");
         cancelButton.setVisibility(Button.GONE);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editFragment.setEditable(true);
+                contactDetailsView.setEditable(true);
                 enableEditing();
             }
         });
     }
 
     public void sendMessage(View v){
-        Contact c = editFragment.getContact();
+        Contact c = contactDetailsView.buildContact();
         Intent i = new Intent(Intent.ACTION_SEND);
         i.putExtra(Intent.EXTRA_EMAIL, c.getEmail());
         i.setType("*/*");

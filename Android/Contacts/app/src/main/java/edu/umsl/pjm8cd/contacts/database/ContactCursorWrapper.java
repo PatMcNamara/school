@@ -2,6 +2,9 @@ package edu.umsl.pjm8cd.contacts.database;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import java.util.UUID;
 
@@ -21,11 +24,18 @@ public class ContactCursorWrapper extends CursorWrapper {
         String firstName = getString(getColumnIndex(ContactTable.Cols.FNAME));
         String lastName = getString(getColumnIndex(ContactTable.Cols.LNAME));
         String email = getString(getColumnIndex(ContactTable.Cols.EMAIL));
+        Bitmap pic = null;
+
+        byte[] rawBlob = getBlob(getColumnIndex(ContactTable.Cols.PHOTO));
+        if(rawBlob != null) {
+            pic = BitmapFactory.decodeByteArray(rawBlob, 0, rawBlob.length);
+        }
 
         Contact c = new Contact(UUID.fromString(uuidString));
         c.setFirstName(firstName);
         c.setLastName(lastName);
         c.setEmail(email);
+        c.setPicture(pic);
         return c;
     }
 }

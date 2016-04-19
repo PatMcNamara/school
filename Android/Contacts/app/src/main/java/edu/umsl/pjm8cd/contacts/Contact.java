@@ -1,5 +1,7 @@
 package edu.umsl.pjm8cd.contacts;
 
+import android.graphics.Bitmap;
+
 import java.util.UUID;
 
 /**
@@ -10,7 +12,7 @@ public class Contact {
     private String firstName;
     private String lastName;
     private String email;
-    //TODO photo.
+    private Bitmap picture;
 
     public Contact(){
         this(UUID.randomUUID());
@@ -18,7 +20,6 @@ public class Contact {
 
     public Contact(UUID id) {
         this.id = id;
-
     }
 
     public UUID getId() {
@@ -47,5 +48,21 @@ public class Contact {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Bitmap getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Bitmap picture) {
+        this.picture = picture;
+    }
+
+    public String getFullName() {
+        return getLastName() + ", " + getFirstName();
+    }
+
+    public boolean hasNoName() {
+        return firstName.equals("") && firstName.equals("");
     }
 }

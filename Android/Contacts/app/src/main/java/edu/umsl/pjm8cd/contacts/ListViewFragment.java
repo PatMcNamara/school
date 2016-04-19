@@ -6,10 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -17,9 +17,9 @@ import java.util.List;
 /**
  * Created by Pat on 4/17/2016.
  */
-public class ViewFragment extends Fragment {
-    RecyclerView contactRecyclerView;
-    List<Contact> contacts;
+public class ListViewFragment extends Fragment {
+    private RecyclerView contactRecyclerView;
+    private List<Contact> contacts;
 
     @Nullable
     @Override
@@ -29,19 +29,27 @@ public class ViewFragment extends Fragment {
         contactRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         contacts = DBWrapper.get(getContext()).getAllContacts();
-        contactRecyclerView.setAdapter(new ContactsAdapter());//TODO you must update the adapter when you update something
+        contactRecyclerView.setAdapter(new ContactsAdapter());
         return view;
     }
 
+    /* Updates the contacts in the recycler view */
     public void updateView() {
         contacts = DBWrapper.get(getContext()).getAllContacts();
         contactRecyclerView.setAdapter(new ContactsAdapter());
     }
 
+    /* Are there any contacts? */
+    public boolean isEmpty() {
+        if(contacts == null)
+            return true;
+        return contacts.isEmpty();
+    }
+
     private class ContactHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView nameView;
         private TextView emailView;
-        //TODO photo, send message.
+        private ImageView image;
         private Contact contact;
 
         public ContactHolder(View itemView) {
@@ -50,19 +58,26 @@ public class ViewFragment extends Fragment {
 
             nameView = (TextView) itemView.findViewById(R.id.NameText);
             emailView = (TextView) itemView.findViewById(R.id.emailText);
+            image = (ImageView) itemView.findViewById(R.id.cardContactPicture);
         }
 
         public void bindContact(Contact c) {
-            String name = c.getFirstName() + ", " + c.getLastName();
-            nameView.setText(name);
-            emailView.setText(c.getEmail());
             contact = c;
+
+            nameView.setText(contact.getFullName());
+            emailView.setText(c.getEmail());
+            if(contact.getPicture() == null) {
+                image.setBackgroundResource(R.drawable.ben);
+            } else {
+                image.setBackgroundResource(android.R.color.white);
+                image.setImageBitmap(contact.getPicture());
+            }
         }
 
         @Override
         public void onClick(View view) {
-            Intent intent = EditContactActivity.newIntent(getContext(), contact);
-            Log.d("", "Put value " + intent.getStringExtra(EditContactActivity.UUID) + " into intent.");
+            // Open the details view of the contact
+            Intent intent = DetailEditActivity.newIntent(getContext(), contact);
             startActivity(intent);
         }
     }
