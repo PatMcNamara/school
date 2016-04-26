@@ -9,7 +9,7 @@ extern tree root;
 
 %start program
 
-%token Boolean 1 Integer 2 True 3 False 4 And 5 Array 6 Begin 7 Declare 8
+%token Boolean 1 Integer 2 True 3 False 4 And 5 Array 6 Begin 7 Declare 8 Declaration 50
 %token Else 9 Elseif 10 End 11 Exit 12 For 13 If 14 In 15 Is 16 Loop 17
 %token Mod 18 Not 19 Of 20 Or 21 Procedure 22 Then 23 When 24 While 25 Xor 26
 %token Eq 27 Neq 28 Lth 29 Leq 30 Gth 31 Geq 32
@@ -37,7 +37,7 @@ decls
 	;
 declaration
 	: id_list Colon type 
-		{ $$ = buildTree(Declare, $1, $3, NULL); }
+		{ $$ = buildTree(Declaration, $1, $3, NULL); }
 	;
 id_list
 	: Ident Comma id_list
@@ -124,7 +124,7 @@ relation
 sum
 	: sign prod
 		{ $$ = buildTree($1, $2, NULL, NULL);
-		  if($$->kind == 0) 
+		  if($$->kind == 0) // If there is no sign just put in the prod.
 		     $$ = $2;
 		}
 	| sum Plus prod

@@ -32,7 +32,7 @@ char TokName[][12] =
 	"End", "Exit", "For", "If", "In", "Is", "Loop", "%", "Not", "Of",
 	"Or", "Procedure", "Then", "When", "While" "Xor", "REMOVE THIS", "=", "!=", "<", "<=",
 	">", ">=", "+", "-", "*", "/", "(", ")", "[", "]",
-	":=", "..", ";", ":", ",", "Iconst", "Ident", "U+", "-"};
+	":=", "..", ";", ":", ",", "Iconst", "Ident", "U+", "-", "Declaration"};
 static int indent = 0;
 void printTree (tree p)
 {
@@ -53,6 +53,6 @@ void printTree (tree p)
 				printTree (p->second);
 				printTree (p->third);
 				indent -= 2;
-			}
 		}
+	}
 }

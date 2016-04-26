@@ -36,6 +36,8 @@ BOOLEAN		{return Boolean;}
 INTEGER		{return Integer;}
 TRUE		{return True;}
 FALSE		{return False;}
+{D}+		{ yylval.i = atoi (yytext); return Iconst; }
+{L}({L}|{D}|_)*	{ yylval.i = getIdent(yytext); return Ident; }
 "="			{return Eq;}
 "/="		{return Neq;}
 "<="		{return Leq;}
@@ -55,8 +57,6 @@ FALSE		{return False;}
 ","			{return Comma;}
 ";"			{return Semicolon;}
 ":"			{return Colon;}
-{D}+		{ yylval.i = atoi (yytext); return Iconst; }
-{L}({L}|{D}|_)*	{ yylval.i = getIdent(yytext); return Ident; }
 "\n"		{line++;}
 .			{yyerror ("Bad Character");}
 %%

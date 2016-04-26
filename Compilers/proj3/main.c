@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include "lex_yacc.h"
-#include "tree.h"
+#include "typecheck.h"
 
 extern FILE *yyin;
 tree root;
@@ -14,7 +14,12 @@ int main (int argc, char **argv) {
 	}
 
 	yyparse();
-	printTree (root);
-	
-	check_stmt(root);
+
+	if(root != NULL) {// If there was a syntax error, the tree will be null.
+		//printTree (root);
+		//printf("\n");
+		check(root);
+	} else {
+		printf("Parsing failed. Exiting.\n");
+	}
 }
