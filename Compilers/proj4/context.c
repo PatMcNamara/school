@@ -9,7 +9,7 @@ void print_current_context();
 
 struct STEntry {
 	int id;
-	char *name;
+	//char *name;
 	int addr;
 	int scope;
 	int pos;
@@ -53,15 +53,17 @@ void end_scope() {
 	currentScope--;
 }
 
-int declare_array(char* name, int type, int lower_bound, int upper_bound) {
+int declare_array(/*char* name*/ int id, int type, int lower_bound, int upper_bound) {
 	if(lower_bound > upper_bound) {
 		printf("Lower array bound can not be greater then upper bound.\n");
 	}
-	declare_var(name, type);
+	//declare_var(name, type);
+	declare_var(id, type);
 	
 	// Find just declared variable.
 	struct STEntry* e = ST[0];
-	for( int pos = 0; e != NULL && !(strcmp(e->name, name) == 0); e = ST[++pos]){
+	//for( int pos = 0; e != NULL && !(strcmp(e->name, name) == 0); e = ST[++pos]){
+	for( int pos = 0; e != NULL && e->id != id; e = ST[++pos]){
 		;
 	}
 	
@@ -76,21 +78,22 @@ int declare_array(char* name, int type, int lower_bound, int upper_bound) {
 	return e->addr;
 }
 
-int declare_var(char* name, int type) { 
+int declare_var(/*char* name*/ int id, int type) { 
 	struct STEntry* e = ST[0];
 	int pos;
-	for( pos = 0; e != NULL && !(strcmp(e->name, name) == 0); e = ST[++pos]){
+	for( pos = 0; e != NULL && e->id != id; e = ST[++pos]){
 		;
 	}
-	if(e != NULL) {// If variable already exists in current scope, push it.
+	/*if(e != NULL) {// If variable already exists in current scope, push it.
 		if(e->scope == currentScope) {
 			printf("Error: %s is declared twice in the same scope.\n", name);
 			return 0;
 		}
 		push(e);
-	}
+	}*/
 	e = malloc(sizeof(struct STEntry));
-	e->name = name;
+	//e->name = name;
+	e->id = id;
 	e->addr = DC;
 	DC += var_len;
 	e->scope = currentScope;
@@ -109,7 +112,7 @@ int declare_var(char* name, int type) {
 	return e->addr;
 }
 
-int get_type(char *name) {
+/*int get_type(char *name) {
 	struct STEntry *entry = ST[0];
 	for(int pos = 0; entry != NULL && !(strcmp(entry->name, name) == 0); entry = ST[++pos])
 		;
@@ -119,11 +122,16 @@ int get_type(char *name) {
 		return 0;
 	}
 	return entry->type;
-}
+}*/
 
-get_addr(int index) {
+int get_addr(int index) {
 	//TODO this might be wrong.
+	struct STEntry* e = ST[0];
+	for(int pos = 0; e != NULL && e->id != index; e = ST[++pos]){
+		;
+	}
 	
+	return e->addr;
 }
 
 void push(struct STEntry *entry) {
@@ -140,14 +148,15 @@ void print_current_context() {
 		printf("No variables declared in this scope\n");
 	}
 	for(int i = 0; i < size; i++) {
-		printf("Symbol table entry #%d: '%s' declared in scope %d of type %s.\n", i, ST[i]->name, ST[i]->scope, ST[i]->type == 2 ? "Integer" : "Boolean");
+		//printf("Symbol table entry #%d: '%s' declared in scope %d of type %s.\n", i, ST[i]->name, ST[i]->scope, ST[i]->type == 2 ? "Integer" : "Boolean");
+		printf("Symbol table entry #%d: '%d' declared in scope %d of type %s.\n", i, ST[i]->id, ST[i]->scope, ST[i]->type == 2 ? "Integer" : "Boolean");
 	}
 	printf("End Context.\n\n");
 }
 
-bool is_array(char *name) {
+/*bool is_array(char *name) {
 	struct STEntry *entry = ST[0];
 	for(int pos = 0; entry != NULL && !(strcmp(entry->name, name) == 0); entry = ST[++pos])
 		;
 	return entry != NULL ? entry->array : false;
-}
+}*/
