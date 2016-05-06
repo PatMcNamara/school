@@ -24,6 +24,7 @@ int main (int argc, char **argv) {
 		exit(1);
 	}
 	
+	printf("Code checking disabled, code is assumed to be valid.\n");
 	//check(root);
 	
 	if((output = fopen(argv[2], "w")) == NULL) {

@@ -62,7 +62,6 @@ int declare_array(/*char* name*/ int id, int type, int lower_bound, int upper_bo
 	
 	// Find just declared variable.
 	struct STEntry* e = ST[0];
-	//for( int pos = 0; e != NULL && !(strcmp(e->name, name) == 0); e = ST[++pos]){
 	for( int pos = 0; e != NULL && e->id != id; e = ST[++pos]){
 		;
 	}
@@ -71,9 +70,7 @@ int declare_array(/*char* name*/ int id, int type, int lower_bound, int upper_bo
 	e->lbound = lower_bound;
 	e->ubound = upper_bound;
 	
-	for(int i = lower_bound; i < upper_bound; i++) {
-		DC += var_len;
-	}
+	DC += var_len * (upper_bound - lower_bound);
 	
 	return e->addr;
 }
@@ -125,7 +122,6 @@ int declare_var(/*char* name*/ int id, int type) {
 }*/
 
 int get_addr(int index) {
-	//TODO this might be wrong.
 	struct STEntry* e = ST[0];
 	for(int pos = 0; e != NULL && e->id != index; e = ST[++pos]){
 		;
@@ -133,6 +129,25 @@ int get_addr(int index) {
 	
 	return e->addr;
 }
+
+int get_upper_bound(int index) {
+	struct STEntry* e = ST[0];
+	for(int pos = 0; e != NULL && e->id != index; e = ST[++pos]){
+		;
+	}
+	
+	return e->ubound;
+}
+
+int get_lower_bound(int index) {
+	struct STEntry* e = ST[0];
+	for(int pos = 0; e != NULL && e->id != index; e = ST[++pos]){
+		;
+	}
+	
+	return e->lbound;
+}
+
 
 void push(struct STEntry *entry) {
 	STStack[tos++] = entry;
