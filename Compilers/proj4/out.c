@@ -28,7 +28,7 @@ void forward_ref(int file_index) {
 	print(s);
 	
 	printf("Seeking back to %d\n", cur);
-	fseek(output, cur, SEEK_SET);// TODO this might need to move right to overcome the shift caused by the write.
+	fseek(output, cur, SEEK_SET);
 }
 
 int get_file_pos() {

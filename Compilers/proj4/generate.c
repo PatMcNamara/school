@@ -117,6 +117,26 @@ void gen_expr(tree root) {
 		case Obracket:
 			// Calculate offset
 			gen_expr(root->second);
+			
+			// Make sure it is above the lower bound
+			put_code("DUPW ", 1);
+			sprintf(s, "PUSHW %d ", get_lower_bound(root->first->value));
+			put_code(s, 3);
+			put_code("SUBI ", 1);
+			put_code("TSTLTI ", 1);
+			put_code("RGOZ 1 ", 3);
+			put_code("HALT ", 1);
+			
+			// Make sure it is below the upper bound
+			put_code("DUPW ", 1);
+			sprintf(s, "PUSHW %d ", get_upper_bound(root->first->value));
+			put_code(s, 3);
+			put_code("SWAPW ", 1);
+			put_code("SUBI ", 1);
+			put_code("TSTLTI ", 1);
+			put_code("RGOZ 1 ", 3);
+			put_code("HALT ", 1);
+			
 			put_code("PUSHW 2 ", 3); // Size of a single element in the array
 			put_code("MULI ", 1);
 			
@@ -152,8 +172,6 @@ void gen_expr(tree root) {
 }
 
 void generate(tree root) {
-	//printf("Entered generate\n");
-	
 	for(tree t = root; t != NULL; t = t->next) {
 		char s[20];
 		switch(t->kind) {
@@ -173,7 +191,6 @@ void generate(tree root) {
 						declare_array(cur->value, t->second->second->kind, t->second->first->first->value, t->second->first->second->value);
 					}
 				} else {
-					//printf("Declaring var.\n");
 					for(tree cur = t->first; cur != NULL; cur = cur->next) {
 						declare_var(cur->value, t->second->kind);
 					}
@@ -190,10 +207,30 @@ void generate(tree root) {
 					// Find base address
 					sprintf(s, "PUSHW %d ", get_addr(t->first->first->value));
 					put_code(s, 3);
+					
 					// Calculate offset
 					gen_expr(t->first->second);
-					put_code("PUSHW ", 1);
-					put_code("2 ", 2); // Size of a single element in the array
+					
+					// Make sure it is above the lower bound
+					put_code("DUPW ", 1);
+					sprintf(s, "PUSHW %d ", get_lower_bound(t->first->first->value));
+					put_code(s, 3);
+					put_code("SUBI ", 1);
+					put_code("TSTLTI ", 1);
+					put_code("RGOZ 1 ", 3);
+					put_code("HALT ", 1);
+					
+					// Make sure it is below the upper bound
+					put_code("DUPW ", 1);
+					sprintf(s, "PUSHW %d ", get_upper_bound(t->first->first->value));
+					put_code(s, 3);
+					put_code("SWAPW ", 1);
+					put_code("SUBI ", 1);
+					put_code("TSTLTI ", 1);
+					put_code("RGOZ 1 ", 3);
+					put_code("HALT ", 1);
+					
+					put_code("PUSHW 2 ", 3);// Size of a single element in the array
 					put_code("MULI ", 1);
 					
 					// add base + offset
@@ -204,7 +241,6 @@ void generate(tree root) {
 				}
 				
 				gen_expr(t->second);
-				//find_addr(t->first);
 				put_code("PUTSW ", 1);
 				continue;
 				
@@ -212,10 +248,11 @@ void generate(tree root) {
 			case Elseif:
 				put_code("PUSHQ ", 1);
 				int start = get_file_pos();
-				put_code("      ", 8); 
+				put_code("      ", 8);
 				gen_expr(t->first);
 				put_code("GOZ ", 1);
 				
+				// if t->first is true
 				generate(t->second);
 				put_code("PUSHQ ", 1);
 				int endif = get_file_pos();
