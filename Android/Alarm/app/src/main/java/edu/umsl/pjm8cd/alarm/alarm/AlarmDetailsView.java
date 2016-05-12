@@ -1,12 +1,20 @@
 package edu.umsl.pjm8cd.alarm.alarm;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +28,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.UUID;
 
+import edu.umsl.pjm8cd.alarm.AlarmActivityControler;
 import edu.umsl.pjm8cd.alarm.R;
 import edu.umsl.pjm8cd.alarm.database.DBWrapper;
 
@@ -29,6 +38,8 @@ import edu.umsl.pjm8cd.alarm.database.DBWrapper;
  *
  */
 public class AlarmDetailsView extends Fragment {
+    public static final String UUID_KEY = "uuid";
+
     private EditText alarmName;
     private TextView alarmTime;
     private Switch active; //TODO this should dispatch every time it is checked and undispatch every time it is unchecked, also needs to be added to the db.
@@ -65,13 +76,25 @@ public class AlarmDetailsView extends Fragment {
         ((Button) view.findViewById(R.id.save_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO
                 // Add contact with the given info into the database.
                 if (alarmName.getText().toString().isEmpty() || alarmTime.getText().toString().isEmpty()) {
                     Toast.makeText(getContext(), "Alarm must have a name and a time.", Toast.LENGTH_SHORT).show();
                 } else {
                     Alarm a = buildContact();
                     database.updateOrAddAlarm(a);
+
+                    // Create broadcast pending intent containing the UUID of the alarm
+                    Intent resultIntent = new Intent(getContext(), AlarmReceiver.class);
+                    resultIntent.putExtra(UUID_KEY, a.getId().toString());
+                    PendingIntent resultPendingIntent = PendingIntent.getBroadcast(getContext(), 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                    AlarmManager alarm = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                    if(a.isRunning()) { // Schedule if
+                        alarm.set(AlarmManager.RTC_WAKEUP, a.getTimeAsDate().getTime(), resultPendingIntent);//TODO FIX this time
+                        Log.d("HI", "Started alarm to trigger at " + a.getTimeAsDate().toString());
+                    } else { // Remove from alarm manager if it is already there
+                        alarm.cancel(resultPendingIntent);
+                    }
                     getActivity().finish();
                 }
             }
@@ -162,73 +185,30 @@ public class AlarmDetailsView extends Fragment {
             this.alarmTime = alarmTime;
         }
     }
-//
-//    /* Set to the given photo or to a default image. */
-//    private void updatePictureView() {
-//        if(picture == null) {
-//            pictureView.setBackgroundResource(R.drawable.ben);
-//        } else {
-//            pictureView.setBackgroundResource(android.R.color.white);
-//            pictureView.setImageBitmap(picture);
-//        }
-//    }
-//
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if(resultCode == Activity.RESULT_OK) { // Returned from the camera.
-//            picture = (Bitmap) data.getExtras().get("data");
-//            updatePictureView();
-//        }
-//    }
-//
-//    /* Fills the text and photo areas in the view with the given contact info. */
-//    private void fillFields(Alarm c) {
-//        alarmName.setText(c.getFirstName());
-//        alarmTime.setText(c.getLastName());
-//        email.setText(c.getEmail());
-//        picture = c.getPicture();
-//        updatePictureView();
-//    }
-//
-//    /* Allows the user to edit the data. */
-//    public void setEditable(boolean editable) {
-//        if(editable) {
-//            alarmName.setInputType(InputType.TYPE_CLASS_TEXT);
-//            alarmTime.setInputType(InputType.TYPE_CLASS_TEXT);
-//            email.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS | InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS);
-//            camButton.setVisibility(View.VISIBLE);
-//        } else {
-//            alarmName.setInputType(InputType.TYPE_NULL);
-//            alarmTime.setInputType(InputType.TYPE_NULL);
-//            email.setInputType(InputType.TYPE_NULL);
-//            camButton.setVisibility(View.GONE);
-//        }
-//        inEditMode = editable;
-//    }
-//
-//    /* Takes the view fields and builds a Alarm. */
-//    public Alarm buildContact() {
-//        String first = alarmName.getText().toString();
-//        String last = alarmTime.getText().toString();
-//        String addr = email.getText().toString();
-//
-//        Alarm newTimer;
-//        // If we are updating an existing contact, use the same UUID
-//        String contactUUID = getActivity().getIntent().getStringExtra(AlarmDetailActivity.UUID);
-//        if(contactUUID == null) {
-//            newTimer = new Alarm();
-//        } else {
-//            newTimer = new Alarm(UUID.fromString(contactUUID));
-//        }
-//
-//        newTimer.setFirstName(first);
-//        newTimer.setLastName(last);
-//        newTimer.setEmail(addr);
-//        newTimer.setPicture(picture);
-//        return newTimer;
-//    }
-//
-//    public boolean isInEditMode() {
-//        return inEditMode;
-//    }
+
+    public static class AlarmReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("BR", "Broadcast reciever was triped.");
+            DBWrapper database = DBWrapper.get(context);
+            Alarm a = database.getAlarmFromUUID(UUID.fromString(intent.getStringExtra(UUID_KEY)));
+
+            NotificationCompat.Builder builder =
+                            new NotificationCompat.Builder(context)
+                                    .setSmallIcon(android.R.drawable.ic_dialog_alert)
+                                    .setContentTitle("Alarm")
+                                    .setContentText(a.getName() + " at time " + a.getTime());
+            Intent resultIntent = new Intent(context, AlarmActivityControler.class);//TODO, it should probably be set to a specific location
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(resultPendingIntent);
+            int notificationId = a.getId().hashCode();
+            NotificationManager manager =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.notify(notificationId, builder.build());
+
+            // Set alarm to off.
+            a.setRunning(false);
+            database.updateOrAddAlarm(a);
+        }
+    }
 }

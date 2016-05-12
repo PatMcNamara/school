@@ -37,13 +37,6 @@ public class AlarmDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.blank_layout);
 
-        /* Are we adding a new contact or bring up an edit contact screen? */
-        /*if(getIntent().getStringExtra(UUID) == null) {
-            enableEditing();
-        } else {
-            disableEditing();
-        }*/
-
         FragmentManager manager = getSupportFragmentManager();
         alarmDetailsView = (AlarmDetailsView) manager.findFragmentById(R.id.fragment_detail_holder);
 

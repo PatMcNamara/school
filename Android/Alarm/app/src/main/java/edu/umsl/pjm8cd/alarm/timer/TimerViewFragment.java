@@ -89,7 +89,7 @@ public class TimerViewFragment extends Fragment
                 Calendar currentTime = Calendar.getInstance();
                 Calendar targetTime = Calendar.getInstance();
 //                Log.d("fragment", "current Time = " + c.getTime().toString());
-                targetTime.set(Calendar.HOUR, hour);
+                targetTime.set(Calendar.HOUR_OF_DAY, hour);
                 targetTime.set(Calendar.MINUTE, min);
                 targetTime.set(Calendar.SECOND, 0);
 

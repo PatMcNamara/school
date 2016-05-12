@@ -8,6 +8,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver android:process=":remote" android:name=".alarm.AlarmDetailsView$AlarmReceiver"></receiver>
         <activity android:name=".AlarmActivityControler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

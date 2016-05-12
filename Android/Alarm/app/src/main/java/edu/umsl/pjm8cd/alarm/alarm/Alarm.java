@@ -1,5 +1,8 @@
 package edu.umsl.pjm8cd.alarm.alarm;
 
+import android.util.Log;
+
+import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
@@ -57,5 +60,17 @@ public class Alarm {
 
     public void setRunning(boolean running) {
         this.running = running;
+    }
+
+    public Date getTimeAsDate() {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, hours);
+        c.set(Calendar.MINUTE, minutes);
+        c.set(Calendar.SECOND, 0);
+
+        if(Calendar.getInstance().after(c)) { // If timer is set for tomorrow.
+            c.add(Calendar.DATE, 1);
+        }
+        return c.getTime();
     }
 }
