@@ -1,6 +1,7 @@
-package edu.umsl.pjm8cd.alarm;
+package edu.umsl.pjm8cd.alarm.alarm;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,10 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
+import edu.umsl.pjm8cd.alarm.R;
 import edu.umsl.pjm8cd.alarm.database.DBWrapper;
 
 /**
@@ -90,6 +90,8 @@ public class ListViewFragment extends Fragment {
     private class TimerHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView nameView;
         private TextView timeView;
+        private View itemView;
+
         private Alarm alarm;
 
         public TimerHolder(View itemView) {
@@ -98,6 +100,7 @@ public class ListViewFragment extends Fragment {
 
             nameView = (TextView) itemView.findViewById(R.id.name_text);
             timeView = (TextView) itemView.findViewById(R.id.time_text);
+            this.itemView = itemView;
         }
 
         public void bindContact(Alarm a) {
@@ -105,6 +108,10 @@ public class ListViewFragment extends Fragment {
 
             nameView.setText(alarm.getName());
             timeView.setText(alarm.getTime());
+
+            if(alarm.isRunning()) {
+                itemView.setBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
+            }
         }
 
         @Override

@@ -25,7 +25,8 @@ public class TimerBaseHelper extends SQLiteOpenHelper {
                 TimerTable.Cols.UUID + " TEXT, " +
                 TimerTable.Cols.NAME + " TEXT, " +
                 TimerTable.Cols.HOURS + " INTEGER, " +
-                TimerTable.Cols.MIN + " INTEGER" +
+                TimerTable.Cols.MIN + " INTEGER," +
+                TimerTable.Cols.RUNNING + " INTEGER" +
                 ")"
         );
     }

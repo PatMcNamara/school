@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import edu.umsl.pjm8cd.alarm.Alarm;
+import edu.umsl.pjm8cd.alarm.alarm.Alarm;
 import edu.umsl.pjm8cd.alarm.database.TimerDBSchema.TimerTable;
 
 /**
@@ -52,6 +52,11 @@ public class DBWrapper {
         values.put(TimerTable.Cols.NAME, alarm.getName());
         values.put(TimerTable.Cols.HOURS, alarm.getHours());
         values.put(TimerTable.Cols.MIN, alarm.getMinutes());
+        if(alarm.isRunning()) {
+            values.put(TimerTable.Cols.RUNNING, 1);
+        } else {
+            values.put(TimerTable.Cols.RUNNING, 0);
+        }
 
         return values;
     }

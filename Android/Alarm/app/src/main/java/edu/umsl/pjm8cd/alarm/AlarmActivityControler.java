@@ -1,6 +1,5 @@
 package edu.umsl.pjm8cd.alarm;
 
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -10,8 +9,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
+
+import edu.umsl.pjm8cd.alarm.alarm.ListViewFragment;
+import edu.umsl.pjm8cd.alarm.timer.TimerViewFragment;
 
 public class AlarmActivityControler extends AppCompatActivity {
     ViewPager pager;
@@ -36,6 +36,8 @@ public class AlarmActivityControler extends AppCompatActivity {
                 }catch(NullPointerException e) {
                     Log.d("CONTROLLER", "NPE tryint to get support action bar.");
                 }
+
+
             }
         });
 
@@ -75,7 +77,12 @@ public class AlarmActivityControler extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return ListViewFragment.newInstance();
+            if(position == 0) {
+                return ListViewFragment.newInstance();
+            } else {
+
+                return TimerViewFragment.newInstance();
+            }
 //            ListViewFragment listViewFragment;
 //            FragmentManager manager = getSupportFragmentManager();
 ////            if(position == 0) {

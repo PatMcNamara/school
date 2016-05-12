@@ -1,4 +1,4 @@
-package edu.umsl.pjm8cd.alarm;
+package edu.umsl.pjm8cd.alarm.alarm;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
-import edu.umsl.pjm8cd.alarm.database.DBWrapper;
+import edu.umsl.pjm8cd.alarm.R;
 
 /**
  * Created by Pat on 5/1/2016.

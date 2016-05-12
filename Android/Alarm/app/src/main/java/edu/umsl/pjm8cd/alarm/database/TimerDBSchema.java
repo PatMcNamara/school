@@ -12,6 +12,7 @@ public class TimerDBSchema {
             public static final String NAME = "name";
             public static final String HOURS = "hours";
             public static final String MIN = "min";
+            public static final String RUNNING = "running";
         }
     }
 }

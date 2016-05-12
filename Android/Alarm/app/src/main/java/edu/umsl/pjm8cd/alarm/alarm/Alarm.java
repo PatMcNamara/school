@@ -1,4 +1,4 @@
-package edu.umsl.pjm8cd.alarm;
+package edu.umsl.pjm8cd.alarm.alarm;
 
 import java.util.Date;
 import java.util.UUID;

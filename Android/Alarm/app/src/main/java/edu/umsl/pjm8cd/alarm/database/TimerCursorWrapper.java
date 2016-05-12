@@ -3,10 +3,9 @@ package edu.umsl.pjm8cd.alarm.database;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
-import java.util.Date;
 import java.util.UUID;
 
-import edu.umsl.pjm8cd.alarm.Alarm;
+import edu.umsl.pjm8cd.alarm.alarm.Alarm;
 import edu.umsl.pjm8cd.alarm.database.TimerDBSchema.TimerTable;
 
 /**
@@ -22,11 +21,13 @@ public class TimerCursorWrapper extends CursorWrapper {
         String name = getString(getColumnIndex(TimerTable.Cols.NAME));
         int min = getInt(getColumnIndex(TimerTable.Cols.MIN));
         int hours = getInt(getColumnIndex(TimerTable.Cols.HOURS));
+        int running = getInt(getColumnIndex(TimerTable.Cols.RUNNING));
 
         Alarm c = new Alarm(UUID.fromString(uuidString));
         c.setName(name);
         c.setHours(hours);
         c.setMinutes(min);
+        c.setRunning(running != 0);
         return c;
     }
 }
