@@ -1,13 +1,18 @@
 package edu.umsl.pjm8cd.alarm.alarm;
 
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
+import edu.umsl.pjm8cd.alarm.AlarmActivityControler;
+
 /**
  * Created by Pat on 5/1/2016.
+ *
+ * Alarm model.
  */
 public class Alarm {
     private UUID id;
@@ -62,15 +67,13 @@ public class Alarm {
         this.running = running;
     }
 
+    // Gives the date when the alarm should fire
     public Date getTimeAsDate() {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.HOUR_OF_DAY, hours);
-        c.set(Calendar.MINUTE, minutes);
-        c.set(Calendar.SECOND, 0);
+        return AlarmActivityControler.getTimeAsDate(hours, minutes);
+    }
 
-        if(Calendar.getInstance().after(c)) { // If timer is set for tomorrow.
-            c.add(Calendar.DATE, 1);
-        }
-        return c.getTime();
+    // Gives the phone specific time string for when the alarm should fire.
+    public String getTimeString(boolean twentyFourHour) {
+        return AlarmActivityControler.formatTimeString(hours, minutes, twentyFourHour);
     }
 }

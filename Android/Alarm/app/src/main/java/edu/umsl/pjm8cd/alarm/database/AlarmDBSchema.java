@@ -3,7 +3,7 @@ package edu.umsl.pjm8cd.alarm.database;
 /**
  * Created by Pat on 5/1/2016.
  */
-public class TimerDBSchema {
+public class AlarmDBSchema {
     public static final class TimerTable {
         public static final String NAME = "timer";
 

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,11 +23,14 @@ import edu.umsl.pjm8cd.alarm.database.DBWrapper;
 
 /**
  * Created by Pat on 4/17/2016.
+ *
+ * Displays a list of alarms. (One half of the tabbed main view)
  */
 public class ListViewFragment extends Fragment {
     private RecyclerView contactRecyclerView;
     private List<Alarm> alarms;
 
+    // This text view is shown if the list is empty.
     private TextView noAlarms;
 
     public static ListViewFragment newInstance() {
@@ -42,7 +46,7 @@ public class ListViewFragment extends Fragment {
         noAlarms = (TextView) view.findViewById(R.id.no_alarms);
 
         contactRecyclerView = (RecyclerView) view.findViewById(R.id.contacts_recycler_view);
-        contactRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        contactRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         alarms = DBWrapper.get(getContext()).getAllTimers();
         contactRecyclerView.setAdapter(new TimerAdapter());
@@ -107,8 +111,9 @@ public class ListViewFragment extends Fragment {
             alarm = a;
 
             nameView.setText(alarm.getName());
-            timeView.setText(alarm.getTime());
+            timeView.setText(alarm.getTimeString(DateFormat.is24HourFormat(getActivity())));
 
+            // Running alarms should have different color.
             if(alarm.isRunning()) {
                 itemView.setBackgroundColor(getResources().getColor(android.R.color.holo_green_light));
             }
@@ -125,7 +130,7 @@ public class ListViewFragment extends Fragment {
     private class TimerAdapter extends RecyclerView.Adapter<TimerHolder> {
         @Override
         public TimerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater inflater = LayoutInflater.from(getActivity());
+            LayoutInflater inflater = LayoutInflater.from(getContext());
             View view = inflater.inflate(R.layout.contact_item_layout, parent, false);
             return new TimerHolder(view);
         }

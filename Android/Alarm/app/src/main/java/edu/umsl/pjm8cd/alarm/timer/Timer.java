@@ -8,10 +8,13 @@ import java.util.Date;
 
 /**
  * Created by Pat on 5/12/2016.
+ *
+ * Model to handle the timer. Also is a runnable for managing timer updated.
  */
 public class Timer implements Runnable {
     interface TimerDelegate {
         void updateTime();
+        void timerFinished();
     }
     TimerDelegate del;
     public void setDelegate(TimerDelegate delagate) {
@@ -42,8 +45,11 @@ public class Timer implements Runnable {
         this.timeFinished = timeFinished;
     }
 
+    public long getTimeFinished() {
+        return timeFinished.getTime();
+    }
+
     public String getTimeString() {
-//        Log.d("CHECK", timeFinished.toString() + " and " + (new Date()).toString());
         return formatTimeString(timeFinished.getTime() - (new Date()).getTime());
     }
 
@@ -52,7 +58,12 @@ public class Timer implements Runnable {
         return String.format("%02d:%02d:%02d", (milliseconds / 3600000) % 24, (milliseconds / 60000) % 60, (milliseconds / 1000) % 60);
     }
 
-    //TODO should probably divide into thread stop and start and timer pause and resume.
+    public void threadTryStart() {
+        if(timeFinished != null && timePaused == null) {
+            threadStart();
+        }
+    }
+
     public void threadStart() {
         if(timePaused != null) { // We are resuming from a pause.
             long timeEllapsed = System.currentTimeMillis() - timePaused.getTime();
@@ -75,9 +86,15 @@ public class Timer implements Runnable {
         return timePaused != null;
     }
 
+    public boolean isRunning() { return timeFinished != null;}
+
     @Override
-    public void run() {
-        del.updateTime();
-        handler.postDelayed(this, 500);
+    public void run()  {
+        if((new Date()).after(timeFinished)) { // Are we done?
+            del.timerFinished();
+        } else {
+            del.updateTime();
+            handler.postDelayed(this, 500);
+        }
     }
 }

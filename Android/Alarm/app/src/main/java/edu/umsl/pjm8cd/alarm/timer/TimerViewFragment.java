@@ -1,12 +1,20 @@
 package edu.umsl.pjm8cd.alarm.timer;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.NotificationCompat;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,41 +26,34 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
+import edu.umsl.pjm8cd.alarm.AlarmActivityControler;
 import edu.umsl.pjm8cd.alarm.R;
+import edu.umsl.pjm8cd.alarm.alarm.Alarm;
 import edu.umsl.pjm8cd.alarm.alarm.ListViewFragment;
+import edu.umsl.pjm8cd.alarm.database.DBWrapper;
 
 /**
  * Created by pat on 3/4/2016.
+ *
+ * view and controller Fragment to handle the timer. (One half of the tabs)
  */
 public class TimerViewFragment extends Fragment
         implements Timer.TimerDelegate {
-    interface StopwatchFragmentDelegate {
-        void startStop(Date time);
-        void lapReset(Date time);
-    }
 
-
-    //TODO when the timer reaches zero it should do something.
     Timer model;
 
     private TimePicker picker;
 
     private View pickerLayout;
     private View bodyLayout;
+    private Button pauseResumeButton;
 
-//    private StopwatchFragmentDelegate delegate;
-//    private boolean isRunning = false;
-//
     private TextView timer;
-//    private TextView lapTime;
-//    private Button startStopButton;
-//    private Button lapResetButton;
-//
-//    public void setDelegate(StopwatchFragmentDelegate delegate) {
-//        this.delegate = delegate;
-//    }
 
+    private PendingIntent pendingIntent;
+    private AlarmManager alarmManager;
     public static TimerViewFragment newInstance() {
         TimerViewFragment fragment = new TimerViewFragment();
         return fragment;
@@ -61,19 +62,27 @@ public class TimerViewFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-/*        setRetainInstance(true);//TODO*/
+        setRetainInstance(true);//TODO
         View view = inflater.inflate(R.layout.timer_fragment_view, container, false);
-
-        model = new Timer(this);
+        if(model == null) {
+            model = new Timer(this);
+        }
 
         picker = (TimePicker) view.findViewById(R.id.picker);
         pickerLayout = (View) view.findViewById(R.id.picker_body);
         bodyLayout = (View) view.findViewById(R.id.timer_body);
         timer = (TextView) view.findViewById(R.id.timer);
 
-        Button cancelButton = (Button) view.findViewById(R.id.reset_button);
-        final Button pauseResumeButton = (Button) view.findViewById(R.id.pause_button);
-        Button pickButton = (Button) view.findViewById(R.id.picker_button);
+        final Button cancelButton = (Button) view.findViewById(R.id.reset_button);
+        pauseResumeButton = (Button) view.findViewById(R.id.pause_button);
+        final Button pickButton = (Button) view.findViewById(R.id.picker_button);
+
+        // Create broadcast pending intent containing the UUID of the alarm
+        Intent resultIntent = new Intent(getContext(), AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(getContext(), 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+
+
         pickButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,9 +95,9 @@ public class TimerViewFragment extends Fragment
                     return;
                 }
 
+                // Calculate how long the timer should run.
                 Calendar currentTime = Calendar.getInstance();
                 Calendar targetTime = Calendar.getInstance();
-//                Log.d("fragment", "current Time = " + c.getTime().toString());
                 targetTime.set(Calendar.HOUR_OF_DAY, hour);
                 targetTime.set(Calendar.MINUTE, min);
                 targetTime.set(Calendar.SECOND, 0);
@@ -97,12 +106,13 @@ public class TimerViewFragment extends Fragment
                     targetTime.add(Calendar.DATE, 1);
                 }
 
-//                Log.d("fragment", "finish Time = " + c.getTime().toString());
-
                 model.setTimeFinished(targetTime.getTime());// Set time in the model
 
-                pickerLayout.setVisibility(View.GONE);//TODO this is going to make it hard to save state.
+                // Hide the picker and show the timer.
+                pickerLayout.setVisibility(View.GONE);
                 bodyLayout.setVisibility(View.VISIBLE);
+
+                alarmManager.set(AlarmManager.RTC_WAKEUP, targetTime.getTime().getTime(), pendingIntent);
 
                 updateTime();
                 model.threadStart();
@@ -114,9 +124,11 @@ public class TimerViewFragment extends Fragment
             public void onClick(View view) {
                 if(model.isPaused()) {
                     model.threadStart();
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, model.getTimeFinished(), pendingIntent);
                     pauseResumeButton.setText("Pause");
                 } else {
                     model.threadPause();
+                    alarmManager.cancel(pendingIntent);
                     pauseResumeButton.setText("Resume");
                 }
                 updateTime();
@@ -127,95 +139,71 @@ public class TimerViewFragment extends Fragment
             @Override
             public void onClick(View view) {
                 model.threadStop();
-                //TODO stop everything
+                alarmManager.cancel(pendingIntent);
+                // Show the picker again on cancel.
                 pickerLayout.setVisibility(View.VISIBLE);
                 bodyLayout.setVisibility(View.GONE);
             }
         });
 
-//
-//        elapsedTime = (TextView) view.findViewById(R.id.total_timer);
-//        lapTime = (TextView) view.findViewById(R.id.lap_timer);
-//        startStopButton = (Button) view.findViewById(R.id.start_button);
-//        lapResetButton = (Button) view.findViewById(R.id.reset_button);
-//
-//        startStopButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Call start/stop with the current date
-//                if (delegate != null) {
-//                    delegate.startStop(new Date());
-//
-//                    // Switch the button text.
-//                    if (isRunning) {
-//                        isRunning = false;
-//                    } else {
-//                        isRunning = true;
-//                    }
-//                    updateButtonText();
-//
-//                } else {
-//                    Log.e("Stopwatch", "Stop/start button pressed while view fragment has no delegate set.");
-//                }
-//            }
-//        });
-//        lapResetButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Call reset with the current date
-//                if (delegate != null) {
-//                    delegate.lapReset(new Date());
-//                } else {
-//                    Log.e("Stopwatch", "Lap/reset button pressed while view fragment has no delegate set.");
-//                }
-//            }
-//        });
+        // Resume state
+        if(model.isRunning()) {
+            pickerLayout.setVisibility(View.GONE);
+            bodyLayout.setVisibility(View.VISIBLE);
+            updateTime();
+            if(model.isPaused()) {
+                pauseResumeButton.setText("Resume");
+            }
+        }
         return view;
     }
 
+    // Updates the text field to show the time remaining as specified in the model.
     public void updateTime() {
         timer.setText(model.getTimeString());
     }
 
-//    public void showTimePickerDialog(/*View v*/) {
-//        DialogFragment picker = TimePickerFragment.newInstance(new TimePickerDialog.OnTimeSetListener() {
-//            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-////                        alarmTime.setText(hourOfDay + ":" + minute);
-//                return;
-//            }
-//        });
-//        picker.show(getActivity().getSupportFragmentManager(), "timePicker");
-//    }
+    // Delegate method called when the timer has finished counting down.
+    public void timerFinished() {
+        pauseResumeButton.setVisibility(View.GONE);
+        timer.setText("00:00:00");
+    }
 
     @Override
-    public void onStart() {
-        super.onStart();
-//        updateButtonText();
-
-
+    public void onPause() {
+        super.onPause();
+        model.threadStop();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        model.threadTryStart();
+
     }
 
-    /* Will set the text of the buttons based on if stopwatch is running or not. */
-    /*public void updateButtonText() {
-        if (isRunning) {
-            startStopButton.setText(R.string.stop);
-            lapResetButton.setText(R.string.lap);
-        } else {
-            startStopButton.setText(R.string.start);
-            lapResetButton.setText(R.string.reset);
+    // Receives an alarm when the timer has reached zero. Dispatches a notification.
+    public static class AlarmReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+            builder.setSmallIcon(android.R.drawable.ic_dialog_alert);
+            builder.setContentTitle("Timer Done");
+            builder.setContentText("Your Timer has finished");
+
+            Intent resultIntent = new Intent(context, AlarmActivityControler.class);
+            // When the notification is selected the user should be directed to the timer screen.
+            resultIntent.putExtra(AlarmActivityControler.OPEN_IN_TIMER, true);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(pendingIntent);
+
+            int notificationId = 0;
+            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.notify(notificationId, builder.build());
+
+            // Play sound.
+            MediaPlayer mp = MediaPlayer.create(context, R.raw.finished);
+            mp.start();
         }
-    }*/
-
-    /* Sets total and lap time to the specified values */
-    /*public void updateTime(int totalMillisecondsElapsed, int lapMillisecondsElapsed) {
-        elapsedTime.setText(formatTimeString(totalMillisecondsElapsed));
-        lapTime.setText(formatTimeString(lapMillisecondsElapsed));
-    }*/
-
-
+    }
 }

@@ -6,13 +6,13 @@ import android.database.CursorWrapper;
 import java.util.UUID;
 
 import edu.umsl.pjm8cd.alarm.alarm.Alarm;
-import edu.umsl.pjm8cd.alarm.database.TimerDBSchema.TimerTable;
+import edu.umsl.pjm8cd.alarm.database.AlarmDBSchema.TimerTable;
 
 /**
  * Created by Pat on 5/1/2016.
  */
-public class TimerCursorWrapper extends CursorWrapper {
-    public TimerCursorWrapper(Cursor cursor) {
+public class AlarmCursorWrapper extends CursorWrapper {
+    public AlarmCursorWrapper(Cursor cursor) {
         super(cursor);
     }
 

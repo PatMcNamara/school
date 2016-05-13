@@ -4,17 +4,17 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import edu.umsl.pjm8cd.alarm.database.TimerDBSchema.TimerTable;
+import edu.umsl.pjm8cd.alarm.database.AlarmDBSchema.TimerTable;
 
 /**
  * Created by Pat on 4/17/2016.
  */
-public class TimerBaseHelper extends SQLiteOpenHelper {
-    private static final String TAG = "TimerBaseHelper";
+public class AlarmBaseHelper extends SQLiteOpenHelper {
+    private static final String TAG = "AlarmBaseHelper";
     private static final int VERSION = 1;
     private static final String DATABASE_NAME = "timer.sqlite";
 
-    public TimerBaseHelper(Context context) {
+    public AlarmBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
     }
 

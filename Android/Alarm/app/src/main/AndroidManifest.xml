@@ -9,6 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <receiver android:process=":remote" android:name=".alarm.AlarmDetailsView$AlarmReceiver"></receiver>
+        <receiver android:process=":remote" android:name=".timer.TimerViewFragment$AlarmReceiver"></receiver>
         <activity android:name=".AlarmActivityControler">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

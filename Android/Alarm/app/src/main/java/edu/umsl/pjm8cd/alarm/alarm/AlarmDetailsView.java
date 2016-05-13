@@ -8,6 +8,7 @@ import android.app.TimePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -35,14 +36,14 @@ import edu.umsl.pjm8cd.alarm.database.DBWrapper;
 /**
  * Created by Pat on 5/1/2016.
  *
- *
+ * This view handles the alarm details that come up when a user selects an alarm from the recycler
  */
 public class AlarmDetailsView extends Fragment {
     public static final String UUID_KEY = "uuid";
 
     private EditText alarmName;
     private TextView alarmTime;
-    private Switch active; //TODO this should dispatch every time it is checked and undispatch every time it is unchecked, also needs to be added to the db.
+    private Switch active;
     private DBWrapper database;
 
     @Nullable
@@ -61,9 +62,6 @@ public class AlarmDetailsView extends Fragment {
         if(specifiedUUID != null) { // Is user viewing an existing contact or creating a new one?
             Alarm c = DBWrapper.get(getActivity()).getAlarmFromUUID(UUID.fromString(specifiedUUID));
             fillFields(c);
-        } else {
-//            inEditMode = true;
-//            setEditable(true);
         }
 
         ((Button) view.findViewById(R.id.change_time_button)).setOnClickListener(new View.OnClickListener() {
@@ -86,10 +84,10 @@ public class AlarmDetailsView extends Fragment {
                     // Create broadcast pending intent containing the UUID of the alarm
                     Intent resultIntent = new Intent(getContext(), AlarmReceiver.class);
                     resultIntent.putExtra(UUID_KEY, a.getId().toString());
-                    PendingIntent resultPendingIntent = PendingIntent.getBroadcast(getContext(), 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent resultPendingIntent = PendingIntent.getBroadcast(getContext(), a.getId().hashCode(), resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                     AlarmManager alarm = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-                    if(a.isRunning()) { // Schedule if
+                    if(a.isRunning()) { // schedule if the alarm needs to go off.
                         alarm.set(AlarmManager.RTC_WAKEUP, a.getTimeAsDate().getTime(), resultPendingIntent);//TODO FIX this time
                         Log.d("HI", "Started alarm to trigger at " + a.getTimeAsDate().toString());
                     } else { // Remove from alarm manager if it is already there
@@ -97,6 +95,19 @@ public class AlarmDetailsView extends Fragment {
                     }
                     getActivity().finish();
                 }
+            }
+        });
+
+        ((Button) view.findViewById(R.id.delete_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (alarmName.getText().toString().isEmpty() || alarmTime.getText().toString().isEmpty()) {
+                    return;
+                }
+                Alarm a = buildContact();
+                database.delete(a);
+                getActivity().finish();
+                // We don't worry about doing the alarmmanger entry because the brodcast handler will cover it.
             }
         });
 
@@ -128,23 +139,9 @@ public class AlarmDetailsView extends Fragment {
         String name = alarmName.getText().toString();
         String[] time = alarmTime.getText().toString().split(":");
 
+        // This is cludgy and would be better if we just stored the values when they were updated.
         int hour = Integer.parseInt(time[0]);
         int min = Integer.parseInt(time[1]);
-//        int mid = time.lastIndexOf(":");
-//        int hour = Integer.parseInt(time.substring(0,1));
-//        int min = Integer.parseInt(time.substring(2,3));
-
-        /*Calendar cur = Calendar.getInstance();
-        Calendar future = Calendar.getInstance();
-        future.set(Calendar.HOUR, hour);
-        future.set(Calendar.MINUTE, min);
-
-        if(cur.before(future)) { // If the new time is on the same day as today.
-
-        }
-
-        int curHours = Calendar.getInstance().get(Calendar.HOUR);
-        int curMin = Calendar.getInstance().get(Calendar.MINUTE);*/
 
         Alarm newTimer;
         // If we are updating an existing contact, use the same UUID
@@ -168,7 +165,7 @@ public class AlarmDetailsView extends Fragment {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current time as the default values for the picker
+            // Use the current time as the default values for the picker (would be better if we brought in the alarm so we could set it to the same values).
             final Calendar c = Calendar.getInstance();
             int hour = c.get(Calendar.HOUR_OF_DAY);
             int minute = c.get(Calendar.MINUTE);
@@ -179,7 +176,7 @@ public class AlarmDetailsView extends Fragment {
         }
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            alarmTime.setText(hourOfDay + ":" + minute);
+            alarmTime.setText(hourOfDay + ":" + minute); // This really should be changed to match the behavior of the timer in the recycler but then lots of other stuff have to change too.
         }
         public void setAlarmTime(TextView alarmTime) {
             this.alarmTime = alarmTime;
@@ -189,22 +186,30 @@ public class AlarmDetailsView extends Fragment {
     public static class AlarmReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("BR", "Broadcast reciever was triped.");
             DBWrapper database = DBWrapper.get(context);
             Alarm a = database.getAlarmFromUUID(UUID.fromString(intent.getStringExtra(UUID_KEY)));
 
-            NotificationCompat.Builder builder =
-                            new NotificationCompat.Builder(context)
-                                    .setSmallIcon(android.R.drawable.ic_dialog_alert)
-                                    .setContentTitle("Alarm")
-                                    .setContentText(a.getName() + " at time " + a.getTime());
-            Intent resultIntent = new Intent(context, AlarmActivityControler.class);//TODO, it should probably be set to a specific location
-            PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            if(a == null) { // The delete method doesn't actually remove it from the alarm manager so this check is required.
+                return;
+            }
+
+            // Set and fire a notification.
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+            builder.setSmallIcon(android.R.drawable.ic_dialog_alert);
+            builder.setContentTitle("Alarm");
+            builder.setContentText(a.getName() + " at time " + a.getTimeString(DateFormat.is24HourFormat(context)));
+
+            Intent resultIntent = new Intent(context, AlarmActivityControler.class);
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(context, a.getId().hashCode(), resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
             builder.setContentIntent(resultPendingIntent);
             int notificationId = a.getId().hashCode();
-            NotificationManager manager =
-                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             manager.notify(notificationId, builder.build());
+
+            // Play sound
+            MediaPlayer mp = MediaPlayer.create(context, R.raw.finished);
+            mp.start();
 
             // Set alarm to off.
             a.setRunning(false);

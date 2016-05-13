@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 import edu.umsl.pjm8cd.alarm.alarm.Alarm;
-import edu.umsl.pjm8cd.alarm.database.TimerDBSchema.TimerTable;
+import edu.umsl.pjm8cd.alarm.database.AlarmDBSchema.TimerTable;
 
 /**
  * Created by Pat on 5/1/2016.
@@ -30,20 +30,21 @@ public class DBWrapper {
     }
 
     public DBWrapper(Context context) {
-        database = new TimerBaseHelper(context).getWritableDatabase();
+        database = new AlarmBaseHelper(context).getWritableDatabase();
     }
 
     // Updates the timer if it is already in the database or adds it if it is not.
     public void updateOrAddAlarm(Alarm alarm) {
-        if(getAlarmFromUUID(alarm.getId()) == null) { // New timer
-
-
-//            addNewContact(alarm);
+        if(getAlarmFromUUID(alarm.getId()) == null) { // New alarm
             database.insert(TimerTable.NAME, null, getContentValues(alarm));
         } else { // Update Alarm
             ContentValues values = getContentValues(alarm);
             database.update(TimerTable.NAME, values, TimerTable.Cols.UUID + " = '" + alarm.getId().toString() + "'", null);
         }
+    }
+
+    public void delete(Alarm alarm) {
+        database.delete(TimerTable.NAME, TimerTable.Cols.UUID + " = '" + alarm.getId().toString() + "'", null);
     }
 
     private ContentValues getContentValues(Alarm alarm) {
@@ -61,11 +62,7 @@ public class DBWrapper {
         return values;
     }
 
-    /*private void addNewContact(Alarm newTimer) {
-        database.insert(TimerTable.NAME, null, getContentValues(newTimer));
-    }*/
-
-    private TimerCursorWrapper queryContacts(String whereClause, String[] whereArgs) {
+    private AlarmCursorWrapper queryContacts(String whereClause, String[] whereArgs) {
         Cursor cursor = database.query(
                 TimerTable.NAME,
                 null, // Columns - null selects all columns
@@ -76,14 +73,13 @@ public class DBWrapper {
                 null  // orderBy
         );
 
-        return new TimerCursorWrapper(cursor);
+        return new AlarmCursorWrapper(cursor);
     }
-
 
     public List<Alarm> getAllTimers() {
         List<Alarm> alarms = new ArrayList<>();
 
-        TimerCursorWrapper cursor = queryContacts(null, null);
+        AlarmCursorWrapper cursor = queryContacts(null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -97,7 +93,7 @@ public class DBWrapper {
 
     /* Returns the contact in the database associated with the given UUID or null if the contact doesn't exist */
     public Alarm getAlarmFromUUID(UUID id) {
-        TimerCursorWrapper wrap = queryContacts(TimerTable.Cols.UUID + "='" + id.toString() + "'", null);
+        AlarmCursorWrapper wrap = queryContacts(TimerTable.Cols.UUID + "='" + id.toString() + "'", null);
         wrap.moveToFirst();
         return wrap.getCount() == 0 ? null : wrap.getContact();
     }

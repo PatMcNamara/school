@@ -8,12 +8,24 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="1">
-        <EditText
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Alarm Name"
-            android:ems="10"
-            android:id="@+id/alarm_name"/>
+            android:orientation="horizontal">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Alarm Name"
+                android:ems="10"
+                android:id="@+id/alarm_name"
+                android:layout_toLeftOf="@+id/alarm_enabled"/>
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/alarm_enabled"
+                android:splitTrack="true"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -22,20 +34,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/alarm_time"
-                android:hint="PLACE HOLDER FOR TIME"
+                android:hint="No Time Selected"
                 android:ems="10"
                 android:layout_toLeftOf="@+id/change_time_button"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/change_time_button"
-                android:layout_toLeftOf="@+id/alarm_enabled"/>
-            <Switch
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/alarm_enabled"
-                android:splitTrack="true"
-                android:layout_alignParentRight="true" />
+                android:layout_alignParentRight="true"
+                android:text="Select time"/>
+
         </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,6 +53,12 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/save_button"
                 android:text="Save"
+                android:layout_weight="1"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/delete_button"
+                android:text="Delete"
                 android:layout_weight="1"/>
             <Button
                 android:layout_width="wrap_content"
