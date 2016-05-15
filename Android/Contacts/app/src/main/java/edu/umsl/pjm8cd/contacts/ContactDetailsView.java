@@ -32,9 +32,12 @@ public class ContactDetailsView extends Fragment {
     // The picture will either be a valid bitmap or null if there is no picture.
     private Bitmap picture;
 
+    private boolean inEditMode;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setRetainInstance(true);
         View view = inflater.inflate(R.layout.edit_contact, container, false);
 
         firstName = (EditText) view.findViewById(R.id.firstNameEdit);
@@ -47,11 +50,13 @@ public class ContactDetailsView extends Fragment {
         if(specifiedUUID != null) { // Is user viewing an existing contact or creating a new one?
             setEditable(false);
             Contact c = DBWrapper.get(getActivity()).getContactFromUUID(UUID.fromString(specifiedUUID));
+            inEditMode = false;
             if(c.getPicture() == null) {
                 Log.d("EDIT", "Database gave us a contact without a picture, using default.");
             }
             fillFields(c);
         } else {
+            inEditMode = true;
             setEditable(true);
         }
 
@@ -107,6 +112,7 @@ public class ContactDetailsView extends Fragment {
             email.setInputType(InputType.TYPE_NULL);
             camButton.setVisibility(View.GONE);
         }
+        inEditMode = editable;
     }
 
     /* Takes the view fields and builds a Contact. */
@@ -129,5 +135,9 @@ public class ContactDetailsView extends Fragment {
         newContact.setEmail(addr);
         newContact.setPicture(picture);
         return newContact;
+    }
+
+    public boolean isInEditMode() {
+        return inEditMode;
     }
 }

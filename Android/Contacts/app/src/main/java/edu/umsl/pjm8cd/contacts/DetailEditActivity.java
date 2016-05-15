@@ -46,11 +46,11 @@ public class DetailEditActivity extends AppCompatActivity {
         cancelButton = (Button) findViewById(R.id.bottomButtonRight);
 
         /* Are we adding a new contact or bring up an edit contact screen? */
-        if(getIntent().getStringExtra(UUID) == null) {
+        /*if(getIntent().getStringExtra(UUID) == null) {
             enableEditing();
         } else {
             disableEditing();
-        }
+        }*/
 
         FragmentManager manager = getSupportFragmentManager();
         contactDetailsView = (ContactDetailsView) manager.findFragmentById(R.id.contacts_listing_layout);
@@ -60,6 +60,21 @@ public class DetailEditActivity extends AppCompatActivity {
             manager.beginTransaction()
                     .add(R.id.contacts_listing_layout, contactDetailsView)
                     .commit();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkEditMode();
+    }
+
+    /* Make sure that our edit mode is the same as the fragments. */
+    private void checkEditMode() {
+        if(contactDetailsView.isInEditMode()) {
+            enableEditing();
+        } else {
+            disableEditing();
         }
     }
 

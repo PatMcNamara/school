@@ -107,7 +107,7 @@ public class AlarmDetailsView extends Fragment {
                 Alarm a = buildContact();
                 database.delete(a);
                 getActivity().finish();
-                // We don't worry about doing the alarmmanger entry because the brodcast handler will cover it.
+                // We don't worry about doing the alarmmanger entry because the broadcast handler will cover it.
             }
         });
 
